@@ -1,7 +1,7 @@
 # PWM.py
 #
 # Author : David Huwyler
-# Date   : 25.10.2014
+# Date   : 21.11.2014
 # -----------------------
 # -----------------------
 # Import required Python libraries
@@ -9,7 +9,7 @@ import time
 import sys
 import RPi.GPIO as GPIO # always needed with RPi.GPIO  
   
-GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD numbering schemes
+GPIO.setmode(GPIO.BCM)  # GPIO Nummer Verwenden!
 
 DIR = 16
 STEP = 20
