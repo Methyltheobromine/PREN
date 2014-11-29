@@ -13,7 +13,7 @@ GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD numbering schemes
   
 GPIO.setup(18, GPIO.OUT)# set GPIO 25 as an output
   
-freq = 600  
+freq = 2000  
 p = GPIO.PWM(18, freq)    # create an object p for PWM
 duty = input('Duty: ')
 p.start(duty)
