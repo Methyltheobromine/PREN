@@ -24,17 +24,14 @@ try:
         direction = input('Direction: (1 oder 0)')
         if direction:
           GPIO.output(DIR, True)
-          print('Direction is True')
         else:
           GPIO.output(DIR, False)
-          print('Direction is False')
           
         for i in range(0,stepps):
-          print(i)
           GPIO.output(STEP, True)
-          time.sleep(0.01)
+          time.sleep(0.001)
           GPIO.output(STEP, False)
-          time.sleep(0.01)
+          time.sleep(0.001)
 
 
 except KeyboardInterrupt:
