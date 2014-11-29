@@ -30,15 +30,11 @@ GPIO.setup(LS,GPIO.IN)
 try:
 
   while True:
-      counter = 0
-      start = time.time()
-      while (time.time() < (start +1)):
-        if (GPIO.input(LS) == False):
-          while (GPIO.input(LS) == False):
-            a = 0  #No Operaton
-          counter = counter +1
-          
-      print "Frequenz :" + str(counter)
+    if (GPIO.input(LS) == True):
+      print ("True")
+    if (GPIO.input(LS) == False):
+      print ("False")
+    time.sleep(1)
 	
 except KeyboardInterrupt:
   # User pressed CTRL-C
