@@ -43,20 +43,24 @@ def getFrequenz():
 GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD numbering schemes
   
 GPIO.setup(18, GPIO.OUT)# set GPIO 25 as an output
-  
+
+LS = 4   #Lichtschranken Eingang
+GPIO.setup(LS,GPIO.IN)
+
 freq = 2000  
 p = GPIO.PWM(18, freq)    # create an object p for PWM
 duty = 30
 p.start(duty)
-kp = 10   #Verstärkung Proportional-Anteil
-ki = 0.5  #Verstärkung Integral-Anteil
-kd = 0.1  #Verstärkung Differential-Anteil
+kp = 0.1   #Verstaerkung Proportional-Anteil
+ki = 0.001  #Verstaerkung Integral-Anteil
+kd = 0.000001  #Verstaerkung Differential-Anteil
 
 e_sum = 0
 e_alt = 0
 
 delta_t = 0.1 #Abtastzeit (1/f)
-
+f_ist = 1
+f_ist_alt = 0
 f_soll = input('Frequenz (min 5): ')
 if (f_soll < 5):
   f_soll = 5
@@ -65,8 +69,9 @@ try:
 
   while True:
     #PID-Regler
-    f_ist = getFrequenz()
-    
+    while (f_ist == f_ist_alt):
+      f_ist_alt = f_ist
+      f_ist = getFrequenz()
     e = f_soll-f_ist                #Regelabweichung
     e_sum = e_sum + e               #integration des Fehlers
     e_dif = (e - e_alt)/ delta_t    #differentiation des Fehlers
@@ -88,7 +93,7 @@ try:
     if (duty < 0):
       duty = 0
       
-    print "Frequenz :" + str(freq) + "Duty :" +str(duty)
+    print "Frequenz :" + str(freq) + "  Duty :" +str(duty)
     
     p.ChangeDutyCycle(duty)
     time.sleep(delta_t)
