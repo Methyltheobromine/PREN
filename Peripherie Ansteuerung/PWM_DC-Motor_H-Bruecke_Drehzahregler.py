@@ -22,6 +22,9 @@ def getFrequenz():
     while (GPIO.input(LS) == False):
       a = 0  #No Operaton
     stop = time.time()
+    elapsed = stop-start
+    freq = (1/elapsed)/25
+    return freq
       
   elif (GPIO.input(LS) == True):
     while (GPIO.input(LS) == True):
@@ -32,9 +35,11 @@ def getFrequenz():
     while (GPIO.input(LS) == True):
       a = 0  #No Operaton
     stop = time.time()
-  elapsed = stop-start
-  freq = 1/elapsed
-  return freq
+    elapsed = stop-start
+    freq = (1/elapsed)/25
+    return freq
+  
+  return f_ist
 
 
 # -----------------------
@@ -49,18 +54,21 @@ GPIO.setup(LS,GPIO.IN)
 
 freq = 2000  
 p = GPIO.PWM(18, freq)    # create an object p for PWM
-duty = 30
-p.start(duty)
-kp = 0.1   #Verstaerkung Proportional-Anteil
-ki = 0  #Verstaerkung Integral-Anteil
-kd = 0  #Verstaerkung Differential-Anteil
+
+kp = 0.02   #Verstaerkung Proportional-Anteil
+ki = 0.0001  #Verstaerkung Integral-Anteil
+kd = 0.0000  #Verstaerkung Differential-Anteil
 
 e_sum = 0
 e_alt = 0
+start = 0
+stop = 0
 
-delta_t = 0.1 #Abtastzeit (1/f)
+delta_t = 0.01 #Abtastzeit (1/f)
 f_ist = 0
 f_soll = input('Frequenz (min 5): ')
+duty = 20
+p.start(duty)
 if (f_soll < 5):
   f_soll = 5
 
@@ -73,11 +81,14 @@ try:
     e_sum = e_sum + e               #integration des Fehlers
     e_dif = (e - e_alt)/ delta_t    #differentiation des Fehlers
     e_alt = e
-    if (e_sum > 1000):
-      e_sum = 1000
-    if (e_sum < -1000):
-      e_sum = -1000
+	
+	#AntiWindup
+    if (e_sum > 5000):
+      e_sum = 5000
+    if (e_sum < -5000):
+      e_sum = -5000
 
+	#Gewichtung der Anteile
     y_p = kp*e
     y_i = ki*e_sum
     y_d = kd*e_dif
@@ -85,15 +96,20 @@ try:
     y= y_p + y_i + y_d
     
     duty = duty + y
+	
     if (duty > 100):
       duty = 100
-    if (duty < 25):
-      duty = 25
+    if (duty < 10):
+      duty = 10
       
-    print "Frequenz :" + str(freq) + "  Duty :" +str(duty)
+    print "Frequenz :" + str(f_ist) + "  Duty :" +str(duty) + "  e :" +str(e) + "  e :"  +str(e_sum)
     
     p.ChangeDutyCycle(duty)
-    time.sleep(delta_t)
+
+	#Abzastrate:
+    start = time.time()
+    while(time.time() <= (start+0.00005)):
+      start = start
 
 except KeyboardInterrupt:
   # User pressed CTRL-C

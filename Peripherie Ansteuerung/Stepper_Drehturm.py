@@ -29,9 +29,13 @@ try:
           
         for i in range(0,stepps):
           GPIO.output(STEP, True)
-          time.sleep(0.001)
+          wait = time.time()
+          while(time.time() <= (wait+0.00009)):
+            wait = wait
           GPIO.output(STEP, False)
-          time.sleep(0.001)
+          wait = time.time()
+          while(time.time() <= (wait+0.00009)):
+            wait = wait
 
 
 except KeyboardInterrupt:
