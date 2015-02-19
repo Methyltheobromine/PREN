@@ -6,17 +6,31 @@
 
 package pythonpren;
 
+import T37_PREN.Camera.BildAuswertungKorb;
+import T37_PREN.Camera.BildVonWebcamAufnehmen;
+
 /**
  *
  * @author Severin
  */
 public class PythonPREN {
 
+    private static String speicherort = "";
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        //Foto aufnehmen
+        BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen();
+        speicherort = myPictureFromWebcam.takeAPicture();
+        
+        //Foto auswerten
+        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
+        myBildauswertung.bildAuswerten(speicherort);
+        
+        //Berechnen der Drehung des Turmes
+        //erfolgt in der BildAuswertungsKlasse
     }
     
 }
