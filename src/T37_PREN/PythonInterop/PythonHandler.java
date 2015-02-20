@@ -20,17 +20,17 @@ public final class PythonHandler {
     public PythonHandler() {
     }
 
-    public PythonHandler(String scriptName, String scriptArguments) {
+    public PythonHandler(String scriptName, String scriptArguments) throws IOException {
         startPythonScript(scriptName, scriptArguments);
     }
 
-    public void startPythonScript(String scriptName, String scriptArguments) {
-        try {
+    public void startPythonScript(String scriptName, String scriptArguments) throws IOException {
+//        try {
             ProcessBuilder processBuilder = new ProcessBuilder("python", scriptName, scriptArguments);
             _pythonProcess = processBuilder.start();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+//        } catch (IOException e) {
+//            System.out.println(e);
+//        }
     }
 
     public String getPythonOutput() throws Exception {
