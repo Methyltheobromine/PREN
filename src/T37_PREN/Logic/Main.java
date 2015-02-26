@@ -5,7 +5,7 @@ package T37_PREN.Logic;
  */
 public class Main {
     public static void main(String args[]){
-        UltrasonicHandler ultrasonicHandler = new UltrasonicHandler("C:/WorkSpace/PREN/message.py","");
+        final UltrasonicHandler ultrasonicHandler = new UltrasonicHandler("C:/WorkSpace/PREN/message.py","");
         ultrasonicHandler.runPythonScript();
         ultrasonicHandler.evaluateScriptOutput();
         ultrasonicHandler.stopPythonProcess();
