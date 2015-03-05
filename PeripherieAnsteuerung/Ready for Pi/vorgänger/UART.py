@@ -16,8 +16,8 @@ UART = serial.Serial("/dev/ttyAMA0", 38400)
 
 try:
 
-  while True:
-    string = input('String: ')
+
+    string = str(sys.argv[1])
     UART.open()
     UART.write(string)
     UART.close()

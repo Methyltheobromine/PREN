@@ -46,7 +46,7 @@ public class BildAuswertungKorb {
         int result_cols = img.cols() - templ.cols() + 1;
         int result_rows = img.rows() - templ.rows() + 1;
         Mat result = new Mat(result_rows, result_cols, CvType.CV_32FC1);
-
+        
         // Suchen und normalisieren
         Imgproc.matchTemplate(img, templ, result, match_method);
         Core.normalize(result, result, 0, 1, Core.NORM_MINMAX, -1, new Mat());
@@ -60,20 +60,6 @@ public class BildAuswertungKorb {
         } else {
             matchLoc = mmr.maxLoc;
         }
-
-//        // Get the top 5
-//        for (int k = 1; k <= 5; k++) {
-//            Core.MinMaxLocResult mmr = Core.minMaxLoc(result);
-//
-//            // Set so not retrieved again -- tried everything!
-//            float f[] = new float[1];
-//            f[0] = (float) 0.0;
-//
-//            result.put((int) mmr.minLoc.x, (int) mmr.minLoc.y, f);
-//            result.put((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, f);
-//
-//            Point matchLoc = mmr.maxLoc; // Always the same location :-(
-//        }
 
         // Darstellen
         Core.rectangle(img, matchLoc, new Point(matchLoc.x + templ.cols(),

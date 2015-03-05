@@ -8,6 +8,7 @@ package T37_PREN.PythonInterop;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,14 +21,21 @@ public final class PythonHandler {
     public PythonHandler() {
     }
 
-    public PythonHandler(String scriptName, String scriptArguments) throws IOException {
+    public PythonHandler(String scriptName, ArrayList<String> scriptArguments) throws IOException {
         startPythonScript(scriptName, scriptArguments);
     }
 
-    public void startPythonScript(String scriptName, String scriptArguments) throws IOException {
-//        try {
-            ProcessBuilder processBuilder = new ProcessBuilder("python", scriptName, scriptArguments);
-            _pythonProcess = processBuilder.start();
+    public void startPythonScript(String scriptName, ArrayList<String> scriptArguments) throws IOException {
+        ArrayList<String> pythonCommand=new ArrayList<String>();
+        pythonCommand.add("python");
+        pythonCommand.add(scriptName);
+                
+        for(String arg: scriptArguments){
+            pythonCommand.add(arg);
+        }
+        ProcessBuilder processBuilder = new ProcessBuilder(pythonCommand);
+        //ProcessBuilder processBuilder = new ProcessBuilder("python", scriptName,scriptArguments);
+        _pythonProcess = processBuilder.start();
 //        } catch (IOException e) {
 //            System.out.println(e);
 //        }
@@ -42,7 +50,6 @@ public final class PythonHandler {
         BufferedReader in = new BufferedReader(new InputStreamReader(_pythonProcess.getInputStream()));
         //int ret = new Integer(in.readLine()).intValue();
         pythonOutput = in.readLine();
-
         return pythonOutput;
     }
 

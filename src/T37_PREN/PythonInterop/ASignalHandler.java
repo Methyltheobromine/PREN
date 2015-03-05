@@ -1,6 +1,8 @@
 package T37_PREN.PythonInterop;
 
+import java.awt.List;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by AW on 23.02.15.
@@ -9,14 +11,18 @@ public abstract class ASignalHandler implements ISignalHandler {
 
     private PythonHandler _pythonHandler;    
     private String _pythonScriptPath = "";
-    private String _scriptArguments="";
+    private ArrayList<String> _scriptArguments;
 
-    public String getScriptArguments() {
+    public ASignalHandler() {
+        this._scriptArguments = new ArrayList<>();
+    }
+
+    public ArrayList<String> getScriptArguments() {
         return _scriptArguments;
     }
 
-    public void setScriptArguments(final String _scriptArguments) {
-        this._scriptArguments = _scriptArguments;
+    public void setScriptArguments(final ArrayList<String> scriptArguments) {
+        this._scriptArguments = scriptArguments;
     }
 
     public String getPythonScriptPath() {
