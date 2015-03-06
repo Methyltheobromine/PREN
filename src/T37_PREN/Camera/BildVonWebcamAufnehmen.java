@@ -17,14 +17,24 @@ import org.opencv.highgui.VideoCapture;
 public class BildVonWebcamAufnehmen {
 
     private String speicherort = "camera.jpg";
-    
+
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    public String takeAPicture() {
+    public String takeAPicture() throws InterruptedException {
 
         VideoCapture camera = new VideoCapture(0);
+        
+        camera.open(0);
+        
+        boolean wset = camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 640);
+        boolean hset = camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 480);
+
+        //System.out.println(wset);
+        //System.out.println(hset);
+
+        Thread.sleep(1000);
 
         Mat frame = new Mat();
 
@@ -34,7 +44,7 @@ public class BildVonWebcamAufnehmen {
 
         Highgui.imwrite(speicherort, frame);
         System.out.println("Foto geschpeichert");
-        
+
         camera.release();
         if (!camera.isOpened()) {
             System.out.println("Kamera geschlossen!");

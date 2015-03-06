@@ -8,7 +8,7 @@ package T37_PREN.Logic;
 
 import T37_PREN.PythonInterop.ASignalHandler;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
+
 /**
  * Created by AW on 23.02.15.
  */
@@ -24,9 +24,8 @@ public class UltrasonicHandler extends ASignalHandler{
         try {
             boolean success=false;
             String pythonOutput =getPythonHandler().getPythonOutput();            
-            //String[] splitUltrasonicOutput = pythonOutput.split(";");
-            System.out.println(pythonOutput);
-            success = pythonOutput.isEmpty();
+            String[] splitUltrasonicOutput = pythonOutput.split(";");
+            System.out.println("Links: " + splitUltrasonicOutput[0] + " Rechts: " + splitUltrasonicOutput[1] + " Differenz: " + splitUltrasonicOutput[2]);
         } catch (Exception e) {
             e.printStackTrace();
         }

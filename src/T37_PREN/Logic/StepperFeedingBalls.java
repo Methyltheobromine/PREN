@@ -21,7 +21,7 @@ public class StepperFeedingBalls extends ASignalHandler {
 
     @Override
     public void evaluateScriptOutput() {
-        
+
     }
 
 }

@@ -34,11 +34,7 @@ public final class PythonHandler {
             pythonCommand.add(arg);
         }
         ProcessBuilder processBuilder = new ProcessBuilder(pythonCommand);
-        //ProcessBuilder processBuilder = new ProcessBuilder("python", scriptName,scriptArguments);
         _pythonProcess = processBuilder.start();
-//        } catch (IOException e) {
-//            System.out.println(e);
-//        }
     }
 
     public String getPythonOutput() throws Exception {
@@ -48,14 +44,13 @@ public final class PythonHandler {
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(_pythonProcess.getInputStream()));
-        //int ret = new Integer(in.readLine()).intValue();
         pythonOutput = in.readLine();
         return pythonOutput;
     }
 
     public void stopPythonProcess() throws InterruptedException {
         if (isScriptInitialized()) {
-            _pythonProcess.destroy();
+          //  _pythonProcess.destroy();
             _pythonProcess.waitFor();
         }
     }
