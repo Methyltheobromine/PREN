@@ -16,7 +16,7 @@ import org.opencv.highgui.VideoCapture;
  */
 public class BildVonWebcamAufnehmen {
 
-    private String speicherort = "camera.jpg";
+    private String speicherort = "/home/pi/PREN/camera.jpg";
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -35,7 +35,14 @@ public class BildVonWebcamAufnehmen {
         //System.out.println(hset);
 
         Thread.sleep(1000);
-
+        
+        if(!camera.isOpened()){
+            System.out.println("Camera Error");
+        }
+        else{
+            System.out.println("Camera OK?");
+        }
+        
         Mat frame = new Mat();
 
         camera.read(frame);
