@@ -25,9 +25,19 @@ public class BildVonWebcamAufnehmen {
     public String takeAPicture() throws InterruptedException {
 
         VideoCapture camera = new VideoCapture(0);
-        
+        if(!camera.isOpened()){
+            System.out.println("1Camera Error");
+        }
+        else{
+            System.out.println("1Camera OK?");
+        }
         camera.open(0);
-        
+        if(!camera.isOpened()){
+            System.out.println("2Camera Error");
+        }
+        else{
+            System.out.println("2Camera OK?");
+        }
         boolean wset = camera.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 640);
         boolean hset = camera.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 480);
 
@@ -37,10 +47,10 @@ public class BildVonWebcamAufnehmen {
         Thread.sleep(1000);
         
         if(!camera.isOpened()){
-            System.out.println("Camera Error");
+            System.out.println("3Camera Error");
         }
         else{
-            System.out.println("Camera OK?");
+            System.out.println("3Camera OK?");
         }
         
         Mat frame = new Mat();
