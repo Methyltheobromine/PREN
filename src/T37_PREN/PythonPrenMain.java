@@ -37,9 +37,9 @@ public class PythonPrenMain {
         //speicherort = myPictureFromWebcam.takeAPicture();
 
         //Foto auswerten
-        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
-        String speicherort = "../camera.jpg";
-        myBildauswertung.bildAuswerten(speicherort);
+//        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
+//        String speicherort = "../camera.jpg";
+//        myBildauswertung.bildAuswerten(speicherort);
 
         //Berechnen der Drehung des Turmes
         //erfolgt in der BildAuswertungsKlasse 

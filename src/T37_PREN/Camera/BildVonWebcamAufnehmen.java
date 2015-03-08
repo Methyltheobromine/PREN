@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class BildVonWebcamAufnehmen extends ASignalHandler {
 
-    private String speicherort = "../camera.jpg";
+    //private String speicherort = "../camera.jpg";
 
     public BildVonWebcamAufnehmen(String scriptPath, ArrayList<String> scriptArguments) {
         super.setPythonScriptPath(scriptPath);
@@ -29,7 +29,7 @@ public class BildVonWebcamAufnehmen extends ASignalHandler {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    public String takeAPicture() throws InterruptedException {
+    public void takeAPicture() throws InterruptedException {
 
 //        VideoCapture camera = new VideoCapture(1);
 //        if(!camera.isOpened()){
@@ -68,7 +68,7 @@ public class BildVonWebcamAufnehmen extends ASignalHandler {
 //        } else {
 //            System.out.println("Kamera Error!");
 //        }
-        return speicherort;
+       // return speicherort;
     }
 
     @Override
