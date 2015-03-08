@@ -32,10 +32,13 @@ public class PythonPrenMain {
     public static void cam() throws InterruptedException {
         //Foto aufnehmen
         BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen("Camera_PI_FINAL.py", new ArrayList<String>());
-        speicherort = myPictureFromWebcam.takeAPicture();
+        myPictureFromWebcam.runPythonScript();
+        myPictureFromWebcam.stopPythonProcess();
+        //speicherort = myPictureFromWebcam.takeAPicture();
 
         //Foto auswerten
         BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
+        String speicherort = "../camera.jpg";
         myBildauswertung.bildAuswerten(speicherort);
 
         //Berechnen der Drehung des Turmes
