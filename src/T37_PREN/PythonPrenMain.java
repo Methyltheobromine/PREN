@@ -22,11 +22,11 @@ public class PythonPrenMain {
      */
     public static void main(String[] args) throws Exception {
         cam();
-        ultraschall();
-        stepperDrehturm();
-        stepperFeedingBalls();
-        dcEngineStart();
-        dcEngineStop();
+        //ultraschall();
+        //stepperDrehturm();
+        //stepperFeedingBalls();
+        //dcEngineStart();
+        //dcEngineStop();
     }
 
     public static void stepperDrehturm() {
