@@ -1410,4 +1410,13 @@ is divided into following sections:
             </propertyset>
         </ant>
     </target>
+    
+   <!-- ================================================================== -->
+   <!-- Target: build -->
+   <!-- ================================================================== -->
+    <target name="build" depends="test" description="complete build">
+        <copy todir="C:\Users\Severin\Documents\NetBeansProjects\PythonPREN\Jar">
+            <fileset dir="C:\Users\Severin\Documents\NetBeansProjects\PythonPREN\dist"/>
+        </copy>
+    </target>
 </project>
