@@ -31,7 +31,7 @@ public class PythonPrenMain {
 
     public static void cam() throws InterruptedException {
         //Foto aufnehmen
-        BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen();
+        BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen("Camera_PI_FINAL.py", new ArrayList<String>());
         speicherort = myPictureFromWebcam.takeAPicture();
 
         //Foto auswerten
