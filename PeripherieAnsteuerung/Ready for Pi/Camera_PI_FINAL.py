@@ -9,6 +9,6 @@
 import picamera
 
 camera = picamera.PiCamera()
-camera.resolution(640,480)
+#camera.resolution(640,480)
 camera.capture('/home/pi/git/PREN/camera.jpg')
 
