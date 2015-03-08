@@ -34,12 +34,10 @@ public class PythonPrenMain {
         BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen("../PeripherieAnsteuerung/Ready for Pi/Camera_PI_FINAL.py", new ArrayList<String>());
         myPictureFromWebcam.runPythonScript();
         myPictureFromWebcam.stopPythonProcess();
-        //speicherort = myPictureFromWebcam.takeAPicture();
 
         //Foto auswerten
-//        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
-//        String speicherort = "../camera.jpg";
-//        myBildauswertung.bildAuswerten(speicherort);
+        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
+        myBildauswertung.bildAuswerten();
 
         //Berechnen der Drehung des Turmes
         //erfolgt in der BildAuswertungsKlasse 

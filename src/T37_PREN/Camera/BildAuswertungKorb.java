@@ -23,14 +23,14 @@ public class BildAuswertungKorb {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    public void bildAuswerten(String speicherort) {
+    public void bildAuswerten() {
 
 //        String inFile = "C:/Users/Severin/Documents/NetBeansProjects/PREN_Bildauswertung/src/pren_bildauswertung/bild1.jpg";
 //        String templateFile = "C:/Users/Severin/Documents/NetBeansProjects/PREN_Bildauswertung/src/pren_bildauswertung/bild11.jpg";
 //        String outFile = "C:/Users/Severin/Documents/NetBeansProjects/PREN_Bildauswertung/src/pren_bildauswertung/bild111.jpg";
         
         //Bild in dem gesucht werden soll
-        String inFile = "../Bilder/test4.jpg"; //hier ersetzen durch speicherort
+        String inFile = "../camera.jpg"; 
         //das Bild dass im infile gesucht wird
         String templateFile = "../Bilder/korb.jpg";
         //Lösung wird in diesem Bild präsentiert
