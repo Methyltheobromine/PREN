@@ -24,14 +24,14 @@ public class BildVonWebcamAufnehmen {
 
     public String takeAPicture() throws InterruptedException {
 
-        VideoCapture camera = new VideoCapture(0);
+        VideoCapture camera = new VideoCapture(1);
         if(!camera.isOpened()){
             System.out.println("1Camera Error");
         }
         else{
             System.out.println("1Camera OK?");
         }
-        camera.open(0);
+        camera.open(1);
         if(!camera.isOpened()){
             System.out.println("2Camera Error");
         }
