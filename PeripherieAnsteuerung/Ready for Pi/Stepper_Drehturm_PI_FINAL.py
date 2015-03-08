@@ -20,23 +20,22 @@ GPIO.setup(STEP, GPIO.OUT)
 
 try:
 
-        stepps = str(sys.argv[1])
-        direction = str(sys.argv[2]) #input('Direction: (1 oder 0)')
+        stepps = int (sys.argv[1])
+        direction = int(sys.argv[2]) #input('Direction: (1 oder 0)')
 		
         if direction:
           GPIO.output(DIR, True)
+          #print('Direction is True')
         else:
           GPIO.output(DIR, False)
+          #print('Direction is False')
           
         for i in range(0,stepps):
           GPIO.output(STEP, True)
-          wait = time.time()
-          while(time.time() <= (wait+0.00009)):
-            wait = wait
+          time.sleep(0.01)
           GPIO.output(STEP, False)
-          wait = time.time()
-          while(time.time() <= (wait+0.00009)):
-            wait = wait
+          time.sleep(0.01)
+	GPIO.cleanup()
 
 
 except KeyboardInterrupt:

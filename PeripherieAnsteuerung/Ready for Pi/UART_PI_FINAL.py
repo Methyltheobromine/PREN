@@ -17,10 +17,11 @@ UART = serial.Serial("/dev/ttyAMA0", 38400)
 try:
 
     string = str(sys.argv[1])
-	
+    #print(string)
     UART.open()
     UART.write(string)
     UART.close()
+GPIO.cleanup()
 	
 except KeyboardInterrupt:
   # User pressed CTRL-C

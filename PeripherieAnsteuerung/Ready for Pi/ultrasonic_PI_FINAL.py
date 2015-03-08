@@ -10,7 +10,7 @@
 # -----------------------
 import time
 import RPi.GPIO as GPIO
-
+import os
 # -----------------------
 # Define some functions
 # -----------------------
@@ -92,7 +92,7 @@ GPIO_ECHO_R    = 24
 GPIO_TRIGGER_L = 17
 GPIO_ECHO_L    = 27
 
-print "Ultrasonic Measurement"
+#print "Ultrasonic Measurement"
 
 # Set pins as output and input
 GPIO.setup(GPIO_TRIGGER_R,GPIO.OUT)  # Trigger R
@@ -109,17 +109,9 @@ GPIO.output(GPIO_TRIGGER_L, False)
 # GPIO cleanup function. This will also prevent
 # the user seeing lots of unnecessary error
 # messages.
-try:
 
-  while True:
-
-    distanceR = measure_averageR()
-    distanceL = measure_averageL()
-    s = str(distanceL) + ';' + str(distanceR) + ';' + str(distanceL - distanceR) + '\n'
-    print s
-    time.sleep(0.1)
-
-except KeyboardInterrupt:
-  # User pressed CTRL-C
-  # Reset GPIO settings
-  GPIO.cleanup()
+distanceR = measure_averageR()
+distanceL = measure_averageL()
+s = str(distanceL) + ';' + str(distanceR) + ';' + str(distanceL - distanceR)
+print s
+GPIO.cleanup()
