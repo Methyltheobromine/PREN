@@ -30,11 +30,11 @@ public class BildAuswertungKorb {
 //        String outFile = "C:/Users/Severin/Documents/NetBeansProjects/PREN_Bildauswertung/src/pren_bildauswertung/bild111.jpg";
         
         //Bild in dem gesucht werden soll
-        String inFile = "/home/pi/PREN/Bilder/test4.jpg"; //hier ersetzen durch speicherort
+        String inFile = "../Bilder/test4.jpg"; //hier ersetzen durch speicherort
         //das Bild dass im infile gesucht wird
-        String templateFile = "/home/pi/PREN/Bilder/korb.jpg";
+        String templateFile = "../Bilder/korb.jpg";
         //Lösung wird in diesem Bild präsentiert
-        String outFile = "/home/pi/PREN/LoesungsBild.jpg";
+        String outFile = "../LoesungsBild.jpg";
         //Überprüfungswert wird gesetzt
         int match_method = Imgproc.TM_CCOEFF_NORMED;
 

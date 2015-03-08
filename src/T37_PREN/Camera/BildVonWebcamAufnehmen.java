@@ -16,7 +16,7 @@ import org.opencv.highgui.VideoCapture;
  */
 public class BildVonWebcamAufnehmen {
 
-    private String speicherort = "/home/pi/PREN/camera.jpg";
+    private String speicherort = "../camera.jpg";
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

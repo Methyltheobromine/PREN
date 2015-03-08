@@ -29,14 +29,17 @@ public class PythonPrenMain {
         //dcEngineStop();
     }
 
-    public static void stepperDrehturm() {
-        ArrayList<String> argsP = new ArrayList<>();
-        argsP.add("10"); //Anzahl Schritte (48 ist eine Umdrehung)
-        argsP.add("0"); //Nur 0 oder 1
-        //StepperTurret stepperTurret = new StepperTurret("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
-        StepperTurret stepperTurret = new StepperTurret("Stepper_Drehturm_PI_FINAL.py", argsP);
-        stepperTurret.runPythonScript();
-        stepperTurret.stopPythonProcess();
+    public static void cam() throws InterruptedException {
+        //Foto aufnehmen
+        BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen();
+        speicherort = myPictureFromWebcam.takeAPicture();
+
+        //Foto auswerten
+        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
+        myBildauswertung.bildAuswerten(speicherort);
+
+        //Berechnen der Drehung des Turmes
+        //erfolgt in der BildAuswertungsKlasse 
     }
 
     public static void ultraschall() {
@@ -45,6 +48,16 @@ public class PythonPrenMain {
         ultrasonicHandler.runPythonScript();
         ultrasonicHandler.evaluateScriptOutput();
         ultrasonicHandler.stopPythonProcess();
+    }
+
+    public static void stepperDrehturm() {
+        ArrayList<String> argsP = new ArrayList<>();
+        argsP.add("10"); //Anzahl Schritte (48 ist eine Umdrehung)
+        argsP.add("0"); //Nur 0 oder 1
+        //StepperTurret stepperTurret = new StepperTurret("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
+        StepperTurret stepperTurret = new StepperTurret("Stepper_Drehturm_PI_FINAL.py", argsP);
+        stepperTurret.runPythonScript();
+        stepperTurret.stopPythonProcess();
     }
 
     public static void stepperFeedingBalls() {
@@ -73,19 +86,6 @@ public class PythonPrenMain {
         DCEngineHandler dcEngineHandler = new DCEngineHandler("UART_PI_FINAL.py", argsP);
         dcEngineHandler.runPythonScript();
         dcEngineHandler.stopPythonProcess();
-    }
-
-    public static void cam() throws InterruptedException {
-        //Foto aufnehmen
-        BildVonWebcamAufnehmen myPictureFromWebcam = new BildVonWebcamAufnehmen();
-        speicherort = myPictureFromWebcam.takeAPicture();
-
-        //Foto auswerten
-        BildAuswertungKorb myBildauswertung = new BildAuswertungKorb();
-        myBildauswertung.bildAuswerten(speicherort);
-        
-        //Berechnen der Drehung des Turmes
-        //erfolgt in der BildAuswertungsKlasse 
     }
 
 }
