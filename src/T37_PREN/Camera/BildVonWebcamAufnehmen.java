@@ -19,10 +19,14 @@ import java.util.ArrayList;
 public class BildVonWebcamAufnehmen extends ASignalHandler {
 
     //private String speicherort = "../camera.jpg";
-
     public BildVonWebcamAufnehmen(String scriptPath, ArrayList<String> scriptArguments) {
         super.setPythonScriptPath(scriptPath);
         super.setScriptArguments(scriptArguments);
+    }
+
+    @Override
+    public void evaluateScriptOutput() {
+
     }
 
     static {
@@ -68,12 +72,7 @@ public class BildVonWebcamAufnehmen extends ASignalHandler {
 //        } else {
 //            System.out.println("Kamera Error!");
 //        }
-       // return speicherort;
-    }
-
-    @Override
-    public void evaluateScriptOutput() {
-
+        // return speicherort;
     }
 
 }
