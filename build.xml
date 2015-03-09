@@ -72,10 +72,10 @@
     -->
 	
     <target name="-post-jar">
-        <delete dir="C:/Users/Severin/Documents/NetBeansProjects/PythonPREN/Jar"/>
-        <mkdir dir="C:/Users/Severin/Documents/NetBeansProjects/PythonPREN/Jar" />
-        <copy todir="C:/Users/Severin/Documents/NetBeansProjects/PythonPREN/Jar">
-            <fileset dir="C:/Users/Severin/Documents/NetBeansProjects/PythonPREN/dist"/>
+        <delete dir="Jar"/>
+        <mkdir dir="Jar" />
+        <copy todir="Jar">
+            <fileset dir="dist"/>
         </copy> 
     </target>
 	
