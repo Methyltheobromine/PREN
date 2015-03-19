@@ -23,7 +23,7 @@ public class BildAuswertungKorb {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
-    public void bildAuswerten() {
+    public int bildAuswerten() {
 
 //        String inFile = "C:/Users/Severin/Documents/NetBeansProjects/PREN_Bildauswertung/src/pren_bildauswertung/bild1.jpg";
 //        String templateFile = "C:/Users/Severin/Documents/NetBeansProjects/PREN_Bildauswertung/src/pren_bildauswertung/bild11.jpg";
@@ -83,7 +83,7 @@ public class BildAuswertungKorb {
         Highgui.imwrite(outFile, img);
 
         TurmAusrichten myWurfBot300DrehtSich = new TurmAusrichten(outFile, topLeft, topRight, downLeft, downRight);
-        myWurfBot300DrehtSich.berechneAusrichtung();
+        return (myWurfBot300DrehtSich.berechneAusrichtung());
     }
 
 }

@@ -21,7 +21,7 @@ public class PythonPrenMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        cam();
+        //cam();
         //ultraschall();
         //stepperDrehturm();
         //stepperFeedingBalls();

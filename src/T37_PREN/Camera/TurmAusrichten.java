@@ -30,7 +30,7 @@ public class TurmAusrichten {
         this.downRight = downRight;
     }
     
-    public void berechneAusrichtung(){
+    public int berechneAusrichtung(){
         double mittePicture;
         double mitteKorb;
         
@@ -42,24 +42,25 @@ public class TurmAusrichten {
         
         System.out.println("Mitte Korb: " + mitteKorb);
         System.out.println("Mitte Bild: " + mittePicture);
+        return (int)(mitteKorb - mittePicture); 
         
-        if(mitteKorb != mittePicture){
-            if(mitteKorb < mittePicture){
-                //kleiner bedeutet NACH LINKS DREHEN
-                /*
-                Schrittmotor ansteuern und je nach Pixel die verschoben werden müssen Anzahl Schritte
-                durchführen. Abfangen dass ein Unterschied von -+ 15 Pixel (oder so kei ahnig) ok ist.
-                */
-                System.out.println("Nach links drehen");
-                
-            }else{
-                //kleiner bedeutet NACH RECHTS DREHEN
-                System.out.println("Nach rechts drehen");
-                
-            }
-        }else{
-            System.out.println("Korb ist bereits eingemittet");
-        }
+//        if(mitteKorb != mittePicture){
+//            if(mitteKorb < mittePicture){
+//                //kleiner bedeutet NACH LINKS DREHEN
+//                /*
+//                Schrittmotor ansteuern und je nach Pixel die verschoben werden müssen Anzahl Schritte
+//                durchführen. Abfangen dass ein Unterschied von -+ 15 Pixel (oder so kei ahnig) ok ist.
+//                */
+//                System.out.println("Nach links drehen");
+//                
+//            }else{
+//                //kleiner bedeutet NACH RECHTS DREHEN
+//                System.out.println("Nach rechts drehen");
+//                
+//            }
+//        }else{
+//            System.out.println("Korb ist bereits eingemittet");
+//        }
         
         
         // von vorne beginnen, also erneut ein Bild einlesen um zu bestätigen dass man effektiv gerade vor dem Korb steht.
