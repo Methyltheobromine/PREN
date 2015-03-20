@@ -3,19 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package T37_PREN.Logic;
+package ch.hslu.pren.t37.logic;
 
-import T37_PREN.PythonInterop.ASignalHandler;
-import java.util.ArrayList;
+import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
+import java.util.List;
 
 /**
- *
- * @author Severin Format dass übermittelt werden muss: XXX 120 - maximum 000 -
- * ausschalten
+ * Script Handler for the DC-Engine.
+ * @author Team 37
  */
 public class DCEngineHandler extends ASignalHandler {
 
-    public DCEngineHandler(String scriptPath, ArrayList<String> scriptArguments) {
+    /**
+     * Constructor.
+     * @param scriptPath
+     * @param scriptArguments 
+     */
+    public DCEngineHandler(final String scriptPath,final List<String> scriptArguments) {
+        super();
         super.setPythonScriptPath(scriptPath);
         super.setScriptArguments(scriptArguments);
     }

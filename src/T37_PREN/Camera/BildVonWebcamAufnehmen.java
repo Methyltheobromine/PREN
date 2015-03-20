@@ -9,7 +9,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 import org.opencv.highgui.VideoCapture;
-import T37_PREN.PythonInterop.ASignalHandler;
+import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
 import java.util.ArrayList;
 
 /**

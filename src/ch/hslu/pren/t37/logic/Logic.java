@@ -1,18 +1,21 @@
-package T37_PREN.Logic;
+package ch.hslu.pren.t37.logic;
 
 import T37_PREN.Camera.BildAuswertungKorb;
 import T37_PREN.Camera.BildVonWebcamAufnehmen;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 
+/**
+ * Executes the main controller logic:
+ * @author Team 37
+ */
 public class Logic {
 
     private static final int TURRET_DIST_MIDDLE = 200;
     private static final int TURRET_MAX_LEFT = 200;
     private static final int MM_TO_STEP_CONVERSION = 20;
     private static final String DC_STOP_SIGNAL = "000";
-    private int _ballCounter;
-    
+    private static final int BALL_COUNTER=5;    
     /**
      * RPM Speed of DC-Engine
      * 000 = Stop
@@ -28,9 +31,11 @@ public class Logic {
         this._dcSPEED = _dcSPEED;
     }
 
+    /**
+     * Constructor.
+     */
     public Logic() {
         this._dcSPEED = "170";
-        this._ballCounter = 5;
         moveToInitialPosition();
     }
 
@@ -44,6 +49,15 @@ public class Logic {
         positionTurret(TURRET_DIST_MIDDLE, "1");
     }
 
+    /**
+     * Executes the main logic.
+     * 1. takes the picture
+     * 2. evaluates the template matching
+     * 3. executes the turret stepper.
+     * 4. starts the engine
+     * 5. releases the magazine
+     * @throws InterruptedException 
+     */
     public void initialRun() throws InterruptedException {
         int camSteps = getCalculatedStepsFromCamera();
         if (camSteps != 0) {
@@ -56,12 +70,16 @@ public class Logic {
             }
         }
         startDCEngine();
-        for(int i=1;i<_ballCounter;i++){
+        for(int i=1;i<BALL_COUNTER;i++){
             releaseBalls();
         }
         dcEngineStop();
     }
 
+    /**
+     * Gets the steps from the picture evaluation.
+     * @return steps
+     */
     private int getCalculatedStepsFromCamera() {
         int steps = 0;
         //Foto aufnehmen
@@ -78,6 +96,11 @@ public class Logic {
         return steps;
     }
 
+    /**
+     * Positions the Turret.
+     * @param camSteps
+     * @param direction 
+     */
     private void positionTurret(int camSteps, String direction) {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(Integer.toString(camSteps)); //Anzahl Schritte (48 ist eine Umdrehung)
@@ -109,6 +132,10 @@ public class Logic {
     }
     
     
+    /**
+     * Starts the DC Engine.
+     * @throws InterruptedException 
+     */
     private void startDCEngine() throws InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(_dcSPEED); // max 170
@@ -118,6 +145,9 @@ public class Logic {
         dcEngineHandler.stopPythonProcess();
     }    
 
+    /**
+     * Stops the DC Engine.
+     */
     private void dcEngineStop() {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(DC_STOP_SIGNAL);
@@ -127,12 +157,15 @@ public class Logic {
         dcEngineHandler.stopPythonProcess();
     }
 
+    /**
+     * Releases the Magazine.
+     */
     private void releaseBalls() {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add("1"); //wird * 100 gerechnet
         argsP.add("0"); //Nur 0 oder 1
-        //StepperFeedingBalls stepperFeedingBalls = new StepperFeedingBalls("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
-        StepperFeedingBalls stepperFeedingBalls = new StepperFeedingBalls("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
+        //StepperFeedingBalls stepperFeedingBalls = new StepperMagazine("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
+        StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
         stepperFeedingBalls.runPythonScript();
         stepperFeedingBalls.stopPythonProcess();
     }

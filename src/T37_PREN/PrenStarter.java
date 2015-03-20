@@ -7,23 +7,28 @@ package T37_PREN;
 
 import T37_PREN.Camera.BildAuswertungKorb;
 import T37_PREN.Camera.BildVonWebcamAufnehmen;
-import T37_PREN.Logic.DCEngineHandler;
-import T37_PREN.Logic.Logic;
-import T37_PREN.Logic.StepperFeedingBalls;
-import T37_PREN.Logic.StepperTurret;
-import T37_PREN.Logic.UltrasonicHandler;
+import ch.hslu.pren.t37.logic.DCEngineHandler;
+import ch.hslu.pren.t37.logic.Logic;
+import ch.hslu.pren.t37.logic.StepperMagazine;
+import ch.hslu.pren.t37.logic.StepperTurret;
+import ch.hslu.pren.t37.logic.UltrasonicHandler;
 import java.util.ArrayList;
 
-public class PythonPrenMain {
+public class PrenStarter {
 
     private static String speicherort = "";
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
-        Logic controllerLogic = new Logic();
-        controllerLogic.initialRun();
+        try {
+            Logic controllerLogic = new Logic();
+            controllerLogic.initialRun();
+        } catch (Exception ex) {
+            // ToDO: start failover logic
+        }
         //cam();
         //ultraschall();
         //stepperDrehturm();
@@ -68,8 +73,8 @@ public class PythonPrenMain {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add("1"); //wird * 100 gerechnet
         argsP.add("0"); //Nur 0 oder 1
-        //StepperFeedingBalls stepperFeedingBalls = new StepperFeedingBalls("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
-        StepperFeedingBalls stepperFeedingBalls = new StepperFeedingBalls("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
+        //StepperFeedingBalls stepperFeedingBalls = new StepperMagazine("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
+        StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
         stepperFeedingBalls.runPythonScript();
         stepperFeedingBalls.stopPythonProcess();
     }
