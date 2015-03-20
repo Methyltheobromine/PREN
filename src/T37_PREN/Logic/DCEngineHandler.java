@@ -10,10 +10,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Severin
- * Format dass übermittelt werden muss: XXX
- * 120 - maximum
- * 000 - ausschalten
+ * @author Severin Format dass übermittelt werden muss: XXX 120 - maximum 000 -
+ * ausschalten
  */
 public class DCEngineHandler extends ASignalHandler {
 
@@ -23,8 +21,8 @@ public class DCEngineHandler extends ASignalHandler {
     }
 
     @Override
-    public void evaluateScriptOutput() {
-
+    public String evaluateScriptOutput() {
+        return "";
     }
 
 }

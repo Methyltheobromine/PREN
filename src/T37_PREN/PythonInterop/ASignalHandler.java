@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public abstract class ASignalHandler implements ISignalHandler {
 
-    private PythonHandler _pythonHandler;    
+    private PythonHandler _pythonHandler;
     private String _pythonScriptPath = "";
     private ArrayList<String> _scriptArguments;
 
@@ -33,7 +33,7 @@ public abstract class ASignalHandler implements ISignalHandler {
     public void setPythonScriptPath(final String _pythonScriptPath) {
         this._pythonScriptPath = _pythonScriptPath;
     }
-    
+
     public PythonHandler getPythonHandler() {
         return _pythonHandler;
     }
@@ -41,10 +41,10 @@ public abstract class ASignalHandler implements ISignalHandler {
     public void setPythonHandler(final PythonHandler _pythonHandler) {
         this._pythonHandler = _pythonHandler;
     }
-    
+
     @Override
-    public void stopPythonProcess(){
-        if(_pythonHandler!=null){
+    public void stopPythonProcess() {
+        if (_pythonHandler != null) {
             try {
                 _pythonHandler.stopPythonProcess();
             } catch (InterruptedException e) {
@@ -56,7 +56,7 @@ public abstract class ASignalHandler implements ISignalHandler {
     @Override
     public void runPythonScript() {
         try {
-            _pythonHandler=new PythonHandler(getPythonScriptPath(),getScriptArguments());
+            _pythonHandler = new PythonHandler(getPythonScriptPath(), getScriptArguments());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -20,8 +20,8 @@ public class StepperTurret extends ASignalHandler {
     }
 
     @Override
-    public void evaluateScriptOutput() {
-
+    public String evaluateScriptOutput() {
+        return "";
     }
 
 }
