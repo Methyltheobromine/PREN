@@ -8,6 +8,7 @@ package T37_PREN;
 import T37_PREN.Camera.BildAuswertungKorb;
 import T37_PREN.Camera.BildVonWebcamAufnehmen;
 import T37_PREN.Logic.DCEngineHandler;
+import T37_PREN.Logic.Logic;
 import T37_PREN.Logic.StepperFeedingBalls;
 import T37_PREN.Logic.StepperTurret;
 import T37_PREN.Logic.UltrasonicHandler;
@@ -21,6 +22,8 @@ public class PythonPrenMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
+        Logic controllerLogic = new Logic();
+        controllerLogic.initialRun();
         //cam();
         //ultraschall();
         //stepperDrehturm();

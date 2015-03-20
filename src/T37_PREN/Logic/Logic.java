@@ -44,7 +44,7 @@ public class Logic {
         positionTurret(TURRET_DIST_MIDDLE, "1");
     }
 
-    private void initialRun() throws InterruptedException {
+    public void initialRun() throws InterruptedException {
         int camSteps = getCalculatedStepsFromCamera();
         if (camSteps != 0) {
             String direction = camSteps < 0 ? "0" : "1";
