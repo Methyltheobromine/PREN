@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hslu.ch.pren.t37;
+package ch.hslu.pren.t37;
 
 import ch.hslu.pren.t37.camera.BildAuswertungKorb;
 import ch.hslu.pren.t37.camera.BildVonWebcamAufnehmen;
