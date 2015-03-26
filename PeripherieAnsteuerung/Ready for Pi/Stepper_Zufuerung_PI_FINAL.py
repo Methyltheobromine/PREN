@@ -1,7 +1,8 @@
-# PWM.py
+# This Script is responsable for the turn of the magazin
+# 0 stands for left-turn
+# 1 stands for right turn
 #
-# Author : David Huwyler
-# Date   : 21.11.2014
+# Author : Team 37
 # -----------------------
 # -----------------------
 # Import required Python libraries
@@ -18,29 +19,20 @@ STEP = 26
 GPIO.setup(DIR, GPIO.OUT)
 GPIO.setup(STEP, GPIO.OUT)
 
-try:
+stepps = int (str(sys.argv[1]))*100
+direction = int(str(sys.argv[2])) #Direction: (1 or 0)
 
-        stepps = int (str(sys.argv[1]))*100
-        direction = int(str(sys.argv[2])) #input('Direction: (1 oder 0)')
-		
-        if direction:
-          GPIO.output(DIR, True)
-          #print('Direction is True')
-        else:
-          GPIO.output(DIR, False)
-          #print('Direction is False')
-          
-        for i in range(0,stepps):
-          GPIO.output(STEP, True)
-          time.sleep(0.01)
-          GPIO.output(STEP, False)
-          time.sleep(0.01)
-	GPIO.cleanup()
+if direction:
+  GPIO.output(DIR, True)
+else:
+  GPIO.output(DIR, False)
+  
+for i in range(0,stepps):
+  GPIO.output(STEP, True)
+  time.sleep(0.005)
+  GPIO.output(STEP, False)
+  time.sleep(0.005)
+GPIO.cleanup()
 
-
-except KeyboardInterrupt:
-  # User pressed CTRL-C
-  # Reset GPIO settings
-  GPIO.cleanup()
 
                         

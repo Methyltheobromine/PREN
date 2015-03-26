@@ -1,16 +1,16 @@
-# ultrasonic.py
 # Measure distance using an ultrasonic module
-# in a loop.
+# and gives back the value of each sensor and
+# the difference
 #
-# Author : David Huwyler
-# Date   : 22.10.2014
+# Author : Team 37
 # -----------------------
 # -----------------------
 # Import required Python libraries
-# -----------------------
+
 import time
 import RPi.GPIO as GPIO
 import os
+
 # -----------------------
 # Define some functions
 # -----------------------
