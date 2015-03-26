@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package T37_PREN;
+package ch.hslu.ch.pren.t37;
 
-import T37_PREN.Camera.BildAuswertungKorb;
-import T37_PREN.Camera.BildVonWebcamAufnehmen;
+import ch.hslu.pren.t37.camera.BildAuswertungKorb;
+import ch.hslu.pren.t37.camera.BildVonWebcamAufnehmen;
 import ch.hslu.pren.t37.logic.DCEngineHandler;
 import ch.hslu.pren.t37.logic.Logic;
 import ch.hslu.pren.t37.logic.StepperMagazine;

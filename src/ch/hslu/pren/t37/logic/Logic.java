@@ -1,7 +1,7 @@
 package ch.hslu.pren.t37.logic;
 
-import T37_PREN.Camera.BildAuswertungKorb;
-import T37_PREN.Camera.BildVonWebcamAufnehmen;
+import ch.hslu.pren.t37.camera.BildAuswertungKorb;
+import ch.hslu.pren.t37.camera.BildVonWebcamAufnehmen;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 

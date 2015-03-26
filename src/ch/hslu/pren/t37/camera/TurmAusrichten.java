@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package T37_PREN.Camera;
+package ch.hslu.pren.t37.camera;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
