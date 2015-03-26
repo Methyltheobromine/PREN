@@ -90,7 +90,7 @@ public class PrenStarter {
 
     public static void dcEngineStop() {
         ArrayList<String> argsP = new ArrayList<>();
-        argsP.add("\"000\"");
+        argsP.add("000");
         //DCEngineHandler dcEngineHandler = new DCEngineHandler("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
         DCEngineHandler dcEngineHandler = new DCEngineHandler("../PeripherieAnsteuerung/Ready for Pi/UART_PI_FINAL.py", argsP);
         dcEngineHandler.runPythonScript();
