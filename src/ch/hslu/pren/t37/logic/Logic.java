@@ -25,6 +25,7 @@ public class Logic {
     private static final int TURRET_DIST_MIDDLE = 200;
     private static final int TURRET_MAX_LEFT = 200;
     private static final int MM_TO_STEP_CONVERSION = 20;
+    private static final int PIXEL_TO_STEP_CONVERSION = 20;
     private static final String DC_STOP_SIGNAL = "000";
     private static final int BALL_COUNTER=5;    
     /**
@@ -108,8 +109,9 @@ public class Logic {
 
         //Foto auswerten
         BildAuswertungKorb bildauswertung = new BildAuswertungKorb();
-        bildauswertung.bildAuswerten();
+        int stepsInPixel = bildauswertung.bildAuswerten();
 
+        steps = stepsInPixel/PIXEL_TO_STEP_CONVERSION;
         //Berechnen der Drehung des Turmes
         //erfolgt in der BildAuswertungsKlasse 
         return steps;
