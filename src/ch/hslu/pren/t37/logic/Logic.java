@@ -2,6 +2,9 @@ package ch.hslu.pren.t37.logic;
 
 import ch.hslu.pren.t37.camera.BildAuswertungKorb;
 import ch.hslu.pren.t37.camera.BildVonWebcamAufnehmen;
+import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
+import ch.hslu.pren.t37.pythoninterop.ISignalHandler;
+import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
 
@@ -11,6 +14,14 @@ import java.util.ArrayList;
  */
 public class Logic {
 
+    private ISignalHandler _sigHandler;
+    private ASignalHandler _aSignalH;
+    private DCEngineHandler _dcHandlerE;
+    private BildVonWebcamAufnehmen _bvw;
+    private BildAuswertungKorb _bak;
+    private StepperTurret _st;
+    private UltrasonicHandler _uh;
+    private StepperMagazine _sM;
     private static final int TURRET_DIST_MIDDLE = 200;
     private static final int TURRET_MAX_LEFT = 200;
     private static final int MM_TO_STEP_CONVERSION = 20;
@@ -35,14 +46,14 @@ public class Logic {
      * Constructor.
      */
     public Logic() {
-        this._dcSPEED = "170";
-        moveToInitialPosition();
+//        this._dcSPEED = "170";
+//        moveToInitialPosition();
     }
 
     /**
      * moves the turret to its initial position.
      */
-    private void moveToInitialPosition() {
+    public void moveToInitialPosition() throws IOException, InterruptedException {
         // move to turretStop
         positionTurret(TURRET_MAX_LEFT, "0");
         // move to middle
@@ -57,8 +68,9 @@ public class Logic {
      * 4. starts the engine
      * 5. releases the magazine
      * @throws InterruptedException 
+     * @throws java.io.IOException 
      */
-    public void initialRun() throws InterruptedException {
+    public void initialRun() throws InterruptedException, IOException {
         int camSteps = getCalculatedStepsFromCamera();
         if (camSteps != 0) {
             String direction = camSteps < 0 ? "0" : "1";
@@ -80,7 +92,7 @@ public class Logic {
      * Gets the steps from the picture evaluation.
      * @return steps
      */
-    private int getCalculatedStepsFromCamera() {
+    private int getCalculatedStepsFromCamera() throws IOException, InterruptedException {
         int steps = 0;
         //Foto aufnehmen
         BildVonWebcamAufnehmen pictureFromWebcam = new BildVonWebcamAufnehmen("../PeripherieAnsteuerung/Ready for Pi/Camera_PI_FINAL.py", new ArrayList<String>());
@@ -101,11 +113,10 @@ public class Logic {
      * @param camSteps
      * @param direction 
      */
-    private void positionTurret(int camSteps, String direction) {
+    private void positionTurret(int camSteps, String direction) throws IOException, InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(Integer.toString(camSteps)); //Anzahl Schritte (48 ist eine Umdrehung)
         argsP.add(direction); //Nur 0 oder 1
-        //StepperTurret stepperTurret = new StepperTurret("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
         StepperTurret stepperTurret = new StepperTurret("../PeripherieAnsteuerung/Ready for Pi/Stepper_Drehturm_PI_FINAL.py", argsP);
         stepperTurret.runPythonScript();
         stepperTurret.stopPythonProcess();
@@ -115,7 +126,7 @@ public class Logic {
      * Checks the Ultrasonic output and converts the difference to steps
      * @return steps
      */
-    private int getUltrasonicSteps() {
+    private int getUltrasonicSteps() throws IOException, InterruptedException {
         int steps = 0;
         double ultrasonicDiff=0;
 
@@ -136,7 +147,7 @@ public class Logic {
      * Starts the DC Engine.
      * @throws InterruptedException 
      */
-    private void startDCEngine() throws InterruptedException {
+    private void startDCEngine() throws InterruptedException, IOException {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(_dcSPEED); // max 170
         //DCEngineHandler dcEngineHandler = new DCEngineHandler("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
@@ -148,7 +159,7 @@ public class Logic {
     /**
      * Stops the DC Engine.
      */
-    private void dcEngineStop() {
+    private void dcEngineStop() throws IOException, InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(DC_STOP_SIGNAL);
         //DCEngineHandler dcEngineHandler = new DCEngineHandler("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
@@ -160,7 +171,7 @@ public class Logic {
     /**
      * Releases the Magazine.
      */
-    private void releaseBalls() {
+    private void releaseBalls() throws IOException, InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add("1"); //wird * 100 gerechnet
         argsP.add("0"); //Nur 0 oder 1
@@ -169,5 +180,4 @@ public class Logic {
         stepperFeedingBalls.runPythonScript();
         stepperFeedingBalls.stopPythonProcess();
     }
-    
 }

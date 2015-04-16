@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Abstract Class for Signal Handling.
+ *
  * @author Team 37
  */
 public abstract class ASignalHandler implements ISignalHandler {
@@ -23,6 +24,7 @@ public abstract class ASignalHandler implements ISignalHandler {
 
     /**
      * Gets the current Script Arguments.
+     *
      * @return ArrayList<String> Script Arguments
      */
     public List<String> getScriptArguments() {
@@ -31,6 +33,7 @@ public abstract class ASignalHandler implements ISignalHandler {
 
     /**
      * Sets the Script Arguments.
+     *
      * @param scriptArguments
      */
     public void setScriptArguments(final List<String> scriptArguments) {
@@ -39,6 +42,7 @@ public abstract class ASignalHandler implements ISignalHandler {
 
     /**
      * Gets the current Script Path.
+     *
      * @return Script Path
      */
     public String getPythonScriptPath() {
@@ -52,6 +56,7 @@ public abstract class ASignalHandler implements ISignalHandler {
 
     /**
      * Gets the current Python Handler.
+     *
      * @return PythonHandler
      */
     public PythonHandler getPythonHandler() {
@@ -60,29 +65,22 @@ public abstract class ASignalHandler implements ISignalHandler {
 
     /**
      * Set the Python Handler.
-     * @param _pythonHandler 
+     *
+     * @param _pythonHandler
      */
     public void setPythonHandler(final PythonHandler _pythonHandler) {
         this._pythonHandler = _pythonHandler;
     }
 
     @Override
-    public void stopPythonProcess() {
+    public void stopPythonProcess() throws InterruptedException {
         if (_pythonHandler != null) {
-            try {
-                _pythonHandler.stopPythonProcess();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            _pythonHandler.stopPythonProcess();
         }
     }
 
     @Override
-    public void runPythonScript() {
-        try {
-            _pythonHandler = new PythonHandler(getPythonScriptPath(), getScriptArguments());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void runPythonScript() throws IOException {
+        _pythonHandler = new PythonHandler(getPythonScriptPath(), getScriptArguments());
     }
 }

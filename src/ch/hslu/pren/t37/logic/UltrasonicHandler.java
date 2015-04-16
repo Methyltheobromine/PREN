@@ -1,6 +1,7 @@
 package ch.hslu.pren.t37.logic;
 
 import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,18 +25,15 @@ public class UltrasonicHandler extends ASignalHandler {
     /**
      * Evaluates the Ultrasonic output.
      * @return the difference between the left and right ultrasonic signals.
+     * @throws java.io.IOException
      */
     @Override
-    public String evaluateScriptOutput() {
+    public String evaluateScriptOutput() throws IOException{
         String output = "";
-        try {
             final String pythonOutput = getPythonHandler().getPythonOutput();
             final String[] splittedOutput = pythonOutput.split(";");
             System.out.println("Links: " + splittedOutput[0] + " Rechts: " + splittedOutput[1] + " Differenz: " + splittedOutput[2]);
             output = splittedOutput[2];
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return output;
     }
 }

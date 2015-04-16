@@ -52,11 +52,11 @@ public final class PythonHandler {
     /**
      * Gets the Output produced by the Python Script.
      * @return Script Output
-     * @throws Exception 
+     * @throws java.io.IOException 
      */
-    public String getPythonOutput() throws Exception {
+    public String getPythonOutput() throws IOException {
         if (!isScriptInitialized()) {
-            throw new Exception("Script must be Initialized!");
+            throw new NullPointerException("Script must be initialized!");
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(_pythonProcess.getInputStream()));
@@ -68,7 +68,7 @@ public final class PythonHandler {
      * Stops the Python Process.
      * @throws InterruptedException 
      */
-    public void stopPythonProcess() throws InterruptedException {
+    public void stopPythonProcess() throws InterruptedException  {
         if (isScriptInitialized()) {
           //  _pythonProcess.destroy();
             _pythonProcess.waitFor();
