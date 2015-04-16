@@ -82,7 +82,9 @@ public class Logic {
         }
         //startDCEngine();
         for(int i=1;i<BALL_COUNTER;i++){
+            
             releaseBalls();
+            System.out.println("Ball " + i + " geschossen");
         }
         //dcEngineStop();
     }
@@ -198,7 +200,7 @@ public class Logic {
      */
     private void releaseBalls() throws IOException, InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
-        argsP.add("1"); //wird * 100 gerechnet
+        argsP.add("24"); //wird * 100 gerechnet
         argsP.add("0"); //Nur 0 oder 1
         //StepperFeedingBalls stepperFeedingBalls = new StepperMagazine("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
         StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
