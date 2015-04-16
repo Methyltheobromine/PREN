@@ -19,7 +19,7 @@ STEP = 26
 GPIO.setup(DIR, GPIO.OUT)
 GPIO.setup(STEP, GPIO.OUT)
 
-stepps = int (str(sys.argv[1]))*100
+stepps = int (str(sys.argv[1]))
 direction = int(str(sys.argv[2])) #Direction: (1 or 0)
 
 if direction:

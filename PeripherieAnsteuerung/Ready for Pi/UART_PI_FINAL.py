@@ -15,5 +15,4 @@ string = str(sys.argv[1])
 UART.open()
 UART.write(string)
 UART.close()
-GPIO.cleanup()
 
