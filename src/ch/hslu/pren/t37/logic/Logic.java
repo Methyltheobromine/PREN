@@ -4,6 +4,7 @@ import ch.hslu.pren.t37.camera.BildAuswertungKorb;
 import ch.hslu.pren.t37.camera.BildVonWebcamAufnehmen;
 import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
 import ch.hslu.pren.t37.pythoninterop.ISignalHandler;
+import ch.hslu.pren.t37.logic.ReadPropertyFile;
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
@@ -24,16 +25,16 @@ public class Logic {
     private UltrasonicHandler _uh;
     private StepperMagazine _sM;
 
-    private static final int TURRET_DIST_MIDDLE = 50; // Wert bei Initialisierung um in die Mitte zu fahren
-    private static final int MM_TO_STEP_CONVERSION = 2; // Dividend bei Millimeter zu Drehturmschritten 
-    private static final double PIXEL_TO_STEP_CONVERSION = 3.818; // Dividend bei Pixel zu Drehturmschritten
-    private static final String DC_STOP_SIGNAL = "000"; // DC Motor Stop Signal
-    private static final int BALL_COUNTER = 5; // Anzahl Bälle
+    private static int TURRET_DIST_MIDDLE; // Wert bei Initialisierung um in die Mitte zu fahren
+    private static double MM_TO_STEP_CONVERSION; // Dividend bei Millimeter zu Drehturmschritten 
+    private static double PIXEL_TO_STEP_CONVERSION; // Dividend bei Pixel zu Drehturmschritten
+    private static String DC_STOP_SIGNAL; // DC Motor Stop Signal
+    private static int BALL_COUNTER; // Anzahl Bälle
 
     /**
      * RPM Speed of DC-Engine 000 = Stop 170 = Max Speed
      */
-    private String _dcSPEED;
+    private static String _dcSPEED;
 
     public String getDcSPEED() {
         return _dcSPEED;
@@ -50,10 +51,19 @@ public class Logic {
      * @throws InterruptedException
      */
     public Logic() throws IOException, InterruptedException {
-        this._dcSPEED = "100";
+        loadVariableContent();
         moveToInitialPosition();
     }
 
+    public void loadVariableContent(){
+        TURRET_DIST_MIDDLE = Integer.parseInt(ReadPropertyFile.getProperties().getProperty("TURRET_DIST_MIDDLE"));
+        MM_TO_STEP_CONVERSION = Double.parseDouble(ReadPropertyFile.getProperties().getProperty("MM_TO_STEP_CONVERSION"));
+        PIXEL_TO_STEP_CONVERSION = Double.parseDouble(ReadPropertyFile.getProperties().getProperty("PIXEL_TO_STEP_CONVERSION"));
+        DC_STOP_SIGNAL = ReadPropertyFile.getProperties().getProperty("DC_STOP_SIGNAL");
+        BALL_COUNTER = Integer.parseInt(ReadPropertyFile.getProperties().getProperty("BALL_COUNTER"));
+        _dcSPEED = ReadPropertyFile.getProperties().getProperty("dcSPEED");
+    }
+    
     /**
      * moves the turret to its initial position.
      *
@@ -66,6 +76,7 @@ public class Logic {
         turretPositionInitialization.runPythonScript();
         String signal = turretPositionInitialization.evaluateScriptOutput();
         if (!signal.equals("Ready")){
+            System.out.println("Initialisieren fehlgeschlagen");
             throw new IOException("Initilization failed");
         }
         turretPositionInitialization.stopPythonProcess();
