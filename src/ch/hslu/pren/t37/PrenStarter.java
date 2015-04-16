@@ -20,6 +20,7 @@ public class PrenStarter {
         try {
             Logic controllerLogic = new Logic();
             controllerLogic.initialRun();
+            System.out.println("-- FFFFIIIINNNNIIIIISSSSHHHHHHHHH --");
         } catch (IOException | InterruptedException ex) {
             // ToDO: start failover logic
             Logger.getLogger(PrenStarter.class.getName()).log(Level.SEVERE, null, ex);
