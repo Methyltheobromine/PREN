@@ -87,6 +87,11 @@ public class Logic {
         dcEngineStop();
     }
 
+    /**
+     * 
+     * @throws IOException
+     * @throws InterruptedException 
+     */
     private void turnByUltrasonicInformation() throws IOException, InterruptedException {
         String direction;
         int ultrasonicStep = getUltrasonicSteps();
@@ -151,6 +156,17 @@ public class Logic {
         return steps;
     }
     
+    /**
+     * 
+     * @throws IOException
+     * @throws InterruptedException 
+     */
+    private void startInitialization() throws IOException, InterruptedException{
+        TurretPositionInitialization turretPositionInitialization = new TurretPositionInitialization("../PeripherieAnsteuerung/Ready for Pi/Turret_Position_Initialization_PI_FINAL.py", new ArrayList<String>());
+        turretPositionInitialization.runPythonScript();
+        String signal = turretPositionInitialization.evaluateScriptOutput();
+        turretPositionInitialization.stopPythonProcess();
+    }
     
     /**
      * Starts the DC Engine.
