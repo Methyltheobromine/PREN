@@ -25,7 +25,7 @@ public class Logic {
     private static final int TURRET_DIST_MIDDLE = 200;
     private static final int TURRET_MAX_LEFT = 200;
     private static final int MM_TO_STEP_CONVERSION = 2;
-    private static final int PIXEL_TO_STEP_CONVERSION = 2;
+    private static final int PIXEL_TO_STEP_CONVERSION = 6;
     private static final String DC_STOP_SIGNAL = "000";
     private static final int BALL_COUNTER=5;    
     /**
@@ -81,7 +81,7 @@ public class Logic {
             //turnByUltrasonicInformation();
         }
         //startDCEngine();
-        for(int i=1;i<BALL_COUNTER;i++){
+        for(int i=0;i<BALL_COUNTER;i++){
             
             releaseBalls();
             System.out.println("Ball " + i + " geschossen");
@@ -200,8 +200,8 @@ public class Logic {
      */
     private void releaseBalls() throws IOException, InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
-        argsP.add("24"); //wird * 100 gerechnet
-        argsP.add("0"); //Nur 0 oder 1
+        argsP.add("24");
+        argsP.add("1"); 
         //StepperFeedingBalls stepperFeedingBalls = new StepperMagazine("C:\\Users\\Severin\\Documents\\NetBeansProjects\\PythonPREN\\PeripherieAnsteuerung\\test2.py", argsP);
         StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
         stepperFeedingBalls.runPythonScript();
