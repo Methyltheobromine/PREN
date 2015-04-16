@@ -97,7 +97,8 @@ public class Logic {
     private void turnByUltrasonicInformation() throws IOException, InterruptedException {
         String direction;
         int ultrasonicStep = getUltrasonicSteps();
-        while(ultrasonicStep!=0){
+        //while(ultrasonicStep!=0){
+        while(getUltrasonicSteps()!=0){
             direction = ultrasonicStep < 0 ? "0" : "1";
             positionTurret(ultrasonicStep, direction);
         }
