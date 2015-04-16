@@ -75,17 +75,24 @@ public class Logic {
         if (camSteps != 0) {
             String direction = camSteps < 0 ? "0" : "1";
             positionTurret(abs(camSteps), direction);
-            int ultrasonicStep = getUltrasonicSteps();
-            while(ultrasonicStep!=0){
-                direction = ultrasonicStep < 0 ? "0" : "1";
-                positionTurret(ultrasonicStep, direction);
-            }
+            turnByUltrasonicInformation();
+        }else{
+            turnByUltrasonicInformation();
         }
         startDCEngine();
         for(int i=1;i<BALL_COUNTER;i++){
             releaseBalls();
         }
         dcEngineStop();
+    }
+
+    private void turnByUltrasonicInformation() throws IOException, InterruptedException {
+        String direction;
+        int ultrasonicStep = getUltrasonicSteps();
+        while(ultrasonicStep!=0){
+            direction = ultrasonicStep < 0 ? "0" : "1";
+            positionTurret(ultrasonicStep, direction);
+        }
     }
 
     /**
