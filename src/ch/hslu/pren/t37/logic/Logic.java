@@ -24,8 +24,8 @@ public class Logic {
     private StepperMagazine _sM;
     private static final int TURRET_DIST_MIDDLE = 200;
     private static final int TURRET_MAX_LEFT = 200;
-    private static final int MM_TO_STEP_CONVERSION = 5;
-    private static final int PIXEL_TO_STEP_CONVERSION = 5;
+    private static final int MM_TO_STEP_CONVERSION = 2;
+    private static final int PIXEL_TO_STEP_CONVERSION = 2;
     private static final String DC_STOP_SIGNAL = "000";
     private static final int BALL_COUNTER=5;    
     /**
@@ -76,15 +76,15 @@ public class Logic {
         if (camSteps != 0) {
             String direction = camSteps < 0 ? "0" : "1";
             positionTurret(abs(camSteps), direction);
-            turnByUltrasonicInformation();
+            //turnByUltrasonicInformation();
         }else{
-            turnByUltrasonicInformation();
+            //turnByUltrasonicInformation();
         }
-        startDCEngine();
+        //startDCEngine();
         for(int i=1;i<BALL_COUNTER;i++){
             releaseBalls();
         }
-        dcEngineStop();
+        //dcEngineStop();
     }
 
     /**
