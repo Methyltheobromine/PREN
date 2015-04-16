@@ -24,7 +24,7 @@ public class Logic {
     private StepperMagazine _sM;
     private static final int TURRET_DIST_MIDDLE = 200;
     private static final int TURRET_MAX_LEFT = 200;
-    private static final int MM_TO_STEP_CONVERSION = 20;
+    private static final int MM_TO_STEP_CONVERSION = 5;
     private static final int PIXEL_TO_STEP_CONVERSION = 20;
     private static final String DC_STOP_SIGNAL = "000";
     private static final int BALL_COUNTER=5;    

@@ -42,6 +42,7 @@ public class TurmAusrichten {
         
         System.out.println("Mitte Korb: " + mitteKorb);
         System.out.println("Mitte Bild: " + mittePicture);
+        System.out.println(mitteKorb - mittePicture);
         return (int)(mitteKorb - mittePicture); 
         
 //        if(mitteKorb != mittePicture){
