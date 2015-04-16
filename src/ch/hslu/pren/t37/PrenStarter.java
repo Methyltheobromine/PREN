@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 
 public class PrenStarter {
 
-    private static String speicherort = "";
-
     /**
      * @param args the command line arguments
      * @throws java.lang.Exception

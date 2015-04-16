@@ -22,7 +22,6 @@ GPIO.setup(STEP, GPIO.OUT)
 stepps = int (sys.argv[1]) #number of stepps to turn around
 direction = int(sys.argv[2]) #Direction: (1 or 0)
 
-
 if direction:
   GPIO.output(DIR, True)
 else:
@@ -30,9 +29,9 @@ else:
   
 for i in range(0,stepps):
   GPIO.output(STEP, True)
-  time.sleep(0.005)
+  time.sleep(0.01)
   GPIO.output(STEP, False)
-  time.sleep(0.005)
+  time.sleep(0.01)
 GPIO.cleanup()
 
                         

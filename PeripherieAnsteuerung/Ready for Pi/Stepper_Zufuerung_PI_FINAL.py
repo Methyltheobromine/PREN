@@ -29,9 +29,9 @@ else:
   
 for i in range(0,stepps):
   GPIO.output(STEP, True)
-  time.sleep(0.005)
+  time.sleep(0.01)
   GPIO.output(STEP, False)
-  time.sleep(0.005)
+  time.sleep(0.01)
 GPIO.cleanup()
 
 
