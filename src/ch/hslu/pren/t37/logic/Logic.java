@@ -146,7 +146,7 @@ public class Logic {
     /**
      * Gets the steps from the picture evaluation.
      *
-     * @return steps
+     * @return steps   
      */
     private int getCalculatedStepsFromCamera() throws IOException, InterruptedException {
         double steps = 0;
