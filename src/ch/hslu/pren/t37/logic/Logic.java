@@ -98,6 +98,7 @@ public class Logic {
         if (camSteps != 0) {
             System.out.println("Start ausrichtung");
             String direction = camSteps < 0 ? "0" : "1";
+            System.out.println(direction);
             positionTurret(abs(camSteps), direction);
             //turnByUltrasonicInformation();
         } else {
@@ -170,6 +171,7 @@ public class Logic {
         argsP.add(Integer.toString(camSteps));
         argsP.add(direction);
         StepperTurret stepperTurret = new StepperTurret("../PeripherieAnsteuerung/Ready for Pi/Stepper_Drehturm_PI_FINAL.py", argsP);
+        System.out.println("start turmdreheung");
         stepperTurret.runPythonScript();
         stepperTurret.stopPythonProcess();
     }
