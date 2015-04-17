@@ -32,16 +32,16 @@ public class Logic {
     private static int BALL_COUNTER; // Anzahl Bälle
 
     /**
-     * RPM Speed of DC-Engine 000 = Stop 170 = Max Speed
+     * RPM Speed of DC-Engine 000 = Stop 199 = Max Speed
      */
-    private static String _dcSPEED;
+    private static String dcSPEED;
 
     public String getDcSPEED() {
-        return _dcSPEED;
+        return dcSPEED;
     }
 
     public void setDcSPEED(String _dcSPEED) {
-        this._dcSPEED = _dcSPEED;
+        this.dcSPEED = _dcSPEED;
     }
 
     /**
@@ -55,15 +55,22 @@ public class Logic {
         moveToInitialPosition();
     }
 
-    public void loadVariableContent(){
+    public void loadVariableContent() {
         TURRET_DIST_MIDDLE = Integer.parseInt(ReadPropertyFile.getProperties().getProperty("TURRET_DIST_MIDDLE"));
         MM_TO_STEP_CONVERSION = Double.parseDouble(ReadPropertyFile.getProperties().getProperty("MM_TO_STEP_CONVERSION"));
         PIXEL_TO_STEP_CONVERSION = Double.parseDouble(ReadPropertyFile.getProperties().getProperty("PIXEL_TO_STEP_CONVERSION"));
         DC_STOP_SIGNAL = ReadPropertyFile.getProperties().getProperty("DC_STOP_SIGNAL");
         BALL_COUNTER = Integer.parseInt(ReadPropertyFile.getProperties().getProperty("BALL_COUNTER"));
-        _dcSPEED = ReadPropertyFile.getProperties().getProperty("dcSPEED");
+        dcSPEED = ReadPropertyFile.getProperties().getProperty("dcSPEED");
+        System.out.println("Folgende Werte wurden aus dem config.properties geladen: \n"
+                + "TURRET_DIST_MIDDLE : " + TURRET_DIST_MIDDLE + "\n"
+                + "MM_TO_STEP_CONVERSION : " + MM_TO_STEP_CONVERSION + "\n"
+                + "PIXEL_TO_STEP_CONVERSION : " + PIXEL_TO_STEP_CONVERSION + "\n"
+                + "DC_STOP_SIGNAL : " + DC_STOP_SIGNAL + "\n"
+                + "BALL_COUNTER : " + BALL_COUNTER + "\n"
+                + "dcSPEED : " + dcSPEED);
     }
-    
+
     /**
      * moves the turret to its initial position.
      *
@@ -71,15 +78,18 @@ public class Logic {
      * @throws java.lang.InterruptedException
      */
     public final void moveToInitialPosition() throws IOException, InterruptedException {
-       
+
         TurretPositionInitialization turretPositionInitialization = new TurretPositionInitialization("../PeripherieAnsteuerung/Ready for Pi/Turret_Position_Initialization_PI_FINAL.py", new ArrayList<String>());
         turretPositionInitialization.runPythonScript();
         String signal = turretPositionInitialization.evaluateScriptOutput();
-        if (!signal.equals("Ready")){
+        if (!signal.equals("Ready")) {
             System.out.println("Initialisieren fehlgeschlagen");
             throw new IOException("Initilization failed");
         }
         turretPositionInitialization.stopPythonProcess();
+
+        Thread.sleep(250);
+
         // move to middle
         positionTurret(TURRET_DIST_MIDDLE, "1");
     }
@@ -105,6 +115,7 @@ public class Logic {
             System.out.println("test");
             //turnByUltrasonicInformation();
         }
+        System.out.println("start dc engine");
         startDCEngine();
         for (int i = 1; i <= BALL_COUNTER; i++) {
             releaseBalls();
@@ -115,7 +126,7 @@ public class Logic {
 
     /**
      * Turns the Turret on the Information getting by the Ultrasonic Sensors
-     * 
+     *
      * @throws IOException
      * @throws InterruptedException
      */
@@ -170,10 +181,12 @@ public class Logic {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(Integer.toString(camSteps));
         argsP.add(direction);
+        //System.out.println();
         StepperTurret stepperTurret = new StepperTurret("../PeripherieAnsteuerung/Ready for Pi/Stepper_Drehturm_PI_FINAL.py", argsP);
         System.out.println("start turmdreheung");
         stepperTurret.runPythonScript();
         stepperTurret.stopPythonProcess();
+        System.out.println("stop turmdreheung");
     }
 
     /**
@@ -207,7 +220,8 @@ public class Logic {
         ArrayList<String> argsP = new ArrayList<>();
 
         //Wie schnell muss der DC drehen?!?!?!?!?!?
-        argsP.add(getDcSPEED()); // max 170
+        argsP.add(getDcSPEED()); // max 199
+        System.out.println("getDCSPeed liefert: " + getDcSPEED());
         DCEngineHandler dcEngineHandler = new DCEngineHandler("../PeripherieAnsteuerung/Ready for Pi/UART_PI_FINAL.py", argsP);
         dcEngineHandler.runPythonScript();
         dcEngineHandler.stopPythonProcess();
@@ -235,7 +249,7 @@ public class Logic {
      */
     private void releaseBalls() throws IOException, InterruptedException {
         ArrayList<String> argsP = new ArrayList<>();
-        argsP.add("24"); // Eine halbe Umdrehung
+        argsP.add("48"); // Eine halbe Umdrehung
         argsP.add("1");  // Vorwärts drehen
         StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
         stepperFeedingBalls.runPythonScript();
