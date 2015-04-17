@@ -28,7 +28,7 @@ public class ReadPropertyFile {
 
             // Property-File laden
             try (
-                    InputStream input = new FileInputStream("../Jar/config.properties")) {
+                    InputStream input = new FileInputStream("config.properties")) {
                 prop.load(input);
             }
 
