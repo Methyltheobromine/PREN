@@ -94,11 +94,14 @@ public class Logic {
      */
     public void initialRun() throws InterruptedException, IOException {
         int camSteps = getCalculatedStepsFromCamera();
+        System.out.println(camSteps);
         if (camSteps != 0) {
+            System.out.println("Start ausrichtung");
             String direction = camSteps < 0 ? "0" : "1";
             positionTurret(abs(camSteps), direction);
             //turnByUltrasonicInformation();
         } else {
+            System.out.println("test");
             //turnByUltrasonicInformation();
         }
         startDCEngine();
