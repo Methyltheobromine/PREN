@@ -92,26 +92,7 @@ public class BildAuswertungKorb {
         System.out.println("Mitte Korb: " + mitteKorb);
         System.out.println("Mitte Bild: " + mittePicture);
         System.out.println("Differenz: " + differnez + "\nWenn Differnez negativ, nach rechts drehen");
-        //Wenn Differnez negativ, nach rechts drehen!
         
-        //TurmAusrichten myWurfBot300DrehtSich = new TurmAusrichten(outFile, topLeft, topRight, downLeft, downRight);
         return (int)differnez;
-    }
-//    public int berechneAusrichtung(){
-//        double mittePicture;
-//        double mitteKorb;
-//        
-//        Mat img = Highgui.imread(picture, Highgui.CV_LOAD_IMAGE_COLOR);
-//         
-//        mittePicture = img.width() / 2;
-//        mitteKorb = (topRight.x - topLeft.x) / 2;
-//        mitteKorb = topLeft.x + mitteKorb;
-//        
-//        System.out.println("Mitte Korb: " + mitteKorb);
-//        System.out.println("Mitte Bild: " + mittePicture);
-//        System.out.println(mitteKorb - mittePicture);
-//        System.out.println("TEST");
-//        return (int)(mitteKorb - mittePicture); 
-//    }
-    
+    }    
 }

@@ -1,10 +1,10 @@
 package ch.hslu.pren.t37.logic;
 
+import ch.hslu.pren.t37.Logger.PrenLogger;
 import ch.hslu.pren.t37.camera.BildAuswertungKorb;
 import ch.hslu.pren.t37.camera.BildVonWebcamAufnehmen;
 import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
 import ch.hslu.pren.t37.pythoninterop.ISignalHandler;
-import ch.hslu.pren.t37.logic.ReadPropertyFile;
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.ArrayList;
@@ -24,12 +24,14 @@ public class Logic {
     private StepperTurret _st;
     private UltrasonicHandler _uh;
     private StepperMagazine _sM;
+    //private PrenLogger logger;
 
     private static int TURRET_DIST_MIDDLE; // Wert bei Initialisierung um in die Mitte zu fahren
     private static double MM_TO_STEP_CONVERSION; // Dividend bei Millimeter zu Drehturmschritten 
     private static double PIXEL_TO_STEP_CONVERSION; // Dividend bei Pixel zu Drehturmschritten
     private static String DC_STOP_SIGNAL; // DC Motor Stop Signal
     private static int BALL_COUNTER; // Anzahl Bälle
+    private static String LOGLEVEL;
 
     /**
      * RPM Speed of DC-Engine 000 = Stop 199 = Max Speed
@@ -62,6 +64,10 @@ public class Logic {
         DC_STOP_SIGNAL = ReadPropertyFile.getProperties().getProperty("DC_STOP_SIGNAL");
         BALL_COUNTER = Integer.parseInt(ReadPropertyFile.getProperties().getProperty("BALL_COUNTER"));
         dcSPEED = ReadPropertyFile.getProperties().getProperty("dcSPEED");
+        LOGLEVEL = ReadPropertyFile.getProperties().getProperty("LogLevel");
+        
+        PrenLogger.setCurrentLoglevel(PrenLogger.LogLevel.valueOf(LOGLEVEL));
+                
         System.out.println("Folgende Werte wurden aus dem config.properties geladen: \n"
                 + "TURRET_DIST_MIDDLE : " + TURRET_DIST_MIDDLE + "\n"
                 + "MM_TO_STEP_CONVERSION : " + MM_TO_STEP_CONVERSION + "\n"
@@ -159,11 +165,11 @@ public class Logic {
         //Foto auswerten
         BildAuswertungKorb bildauswertung = new BildAuswertungKorb();
         int stepsInPixel = bildauswertung.bildAuswerten();
-        System.out.println("Steps in Pixel: " + stepsInPixel);
+        //System.out.println("Steps in Pixel: " + stepsInPixel);
         steps = stepsInPixel / PIXEL_TO_STEP_CONVERSION; // int / double --> double
-        System.out.println("CAM: Nach Berechnung, also Anzahl Schritte" + steps);
+        //System.out.println("CAM: Nach Berechnung, also Anzahl Schritte" + steps);
         steps = (int) Math.round(steps);
-        System.out.println("CAM: Nach Berechnung GERUNDET, also Anzahl Schritte" + steps);
+        //System.out.println("CAM: Nach Berechnung GERUNDET, also Anzahl Schritte" + steps);
 
         int stepsToTurn = (int) steps;
         //Berechnen der Drehung des Turmes
