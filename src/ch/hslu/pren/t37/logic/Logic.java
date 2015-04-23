@@ -65,7 +65,7 @@ public class Logic {
         BALL_COUNTER = Integer.parseInt(ReadPropertyFile.getProperties().getProperty("BALL_COUNTER"));
         dcSPEED = ReadPropertyFile.getProperties().getProperty("dcSPEED");
         LOGLEVEL = ReadPropertyFile.getProperties().getProperty("LogLevel");
-        
+        System.out.println(LOGLEVEL);
         PrenLogger.setCurrentLoglevel(PrenLogger.LogLevel.valueOf(LOGLEVEL));
                 
         logger.log(PrenLogger.LogLevel.DEBUG, "Folgende Werte wurden aus dem config.properties geladen: \n"
