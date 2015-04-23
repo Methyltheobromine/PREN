@@ -24,7 +24,7 @@ public class Logic {
     private StepperTurret _st;
     private UltrasonicHandler _uh;
     private StepperMagazine _sM;
-    //private PrenLogger logger;
+    private PrenLogger logger;
 
     private static int TURRET_DIST_MIDDLE; // Wert bei Initialisierung um in die Mitte zu fahren
     private static double MM_TO_STEP_CONVERSION; // Dividend bei Millimeter zu Drehturmschritten 
@@ -68,7 +68,7 @@ public class Logic {
         
         PrenLogger.setCurrentLoglevel(PrenLogger.LogLevel.valueOf(LOGLEVEL));
                 
-        System.out.println("Folgende Werte wurden aus dem config.properties geladen: \n"
+        logger.log(PrenLogger.LogLevel.DEBUG, "Folgende Werte wurden aus dem config.properties geladen: \n"
                 + "TURRET_DIST_MIDDLE : " + TURRET_DIST_MIDDLE + "\n"
                 + "MM_TO_STEP_CONVERSION : " + MM_TO_STEP_CONVERSION + "\n"
                 + "PIXEL_TO_STEP_CONVERSION : " + PIXEL_TO_STEP_CONVERSION + "\n"
@@ -83,19 +83,17 @@ public class Logic {
      * @throws java.io.IOException
      * @throws java.lang.InterruptedException
      */
-    public final void moveToInitialPosition() throws IOException, InterruptedException {
+    public void moveToInitialPosition() throws IOException, InterruptedException {
 
         TurretPositionInitialization turretPositionInitialization = new TurretPositionInitialization("../PeripherieAnsteuerung/Ready for Pi/Turret_Position_Initialization_PI_FINAL.py", new ArrayList<String>());
         turretPositionInitialization.runPythonScript();
         String signal = turretPositionInitialization.evaluateScriptOutput();
         if (!signal.equals("Ready")) {
-            System.out.println("Initialisieren fehlgeschlagen");
+            logger.log(PrenLogger.LogLevel.ERROR, "Initialisieren fehlgeschlagen");
             throw new IOException("Initilization failed");
         }
         turretPositionInitialization.stopPythonProcess();
-
         Thread.sleep(250);
-
         // move to middle
         positionTurret(TURRET_DIST_MIDDLE, "1");
     }
@@ -110,22 +108,20 @@ public class Logic {
      */
     public void initialRun() throws InterruptedException, IOException {
         int camSteps = getCalculatedStepsFromCamera();
-        System.out.println(camSteps);
         if (camSteps != 0) {
-            System.out.println("Start ausrichtung");
+            logger.log(PrenLogger.LogLevel.DEBUG, "Start ausrichtung");
             String direction = camSteps < 0 ? "0" : "1";
-            System.out.println(direction);
+            logger.log(PrenLogger.LogLevel.DEBUG, "Richtung: " + direction);
             positionTurret(abs(camSteps), direction);
             //turnByUltrasonicInformation();
         } else {
-            System.out.println("test");
             //turnByUltrasonicInformation();
         }
-        System.out.println("start dc engine");
+        logger.log(PrenLogger.LogLevel.DEBUG, "Start DC Engine");
         startDCEngine();
         for (int i = 1; i <= BALL_COUNTER; i++) {
             releaseBalls();
-            System.out.println("Ball " + i + " geschossen");
+            logger.log(PrenLogger.LogLevel.DEBUG, "Ball " + i + " geschossen");
         }
         dcEngineStop();
     }
@@ -157,11 +153,11 @@ public class Logic {
     private int getCalculatedStepsFromCamera() throws IOException, InterruptedException {
         double steps = 0;
         //Foto aufnehmen
-        System.out.println("Start CAM");
+        logger.log(PrenLogger.LogLevel.DEBUG, "Start Camera");
         BildVonWebcamAufnehmen pictureFromWebcam = new BildVonWebcamAufnehmen("../PeripherieAnsteuerung/Ready for Pi/Camera_PI_FINAL.py", new ArrayList<String>());
         pictureFromWebcam.runPythonScript();
         pictureFromWebcam.stopPythonProcess();
-        System.out.println("Stop CAM");
+        logger.log(PrenLogger.LogLevel.DEBUG, "Stop Camera");
         //Foto auswerten
         BildAuswertungKorb bildauswertung = new BildAuswertungKorb();
         int stepsInPixel = bildauswertung.bildAuswerten();
@@ -187,12 +183,9 @@ public class Logic {
         ArrayList<String> argsP = new ArrayList<>();
         argsP.add(Integer.toString(camSteps));
         argsP.add(direction);
-        //System.out.println();
         StepperTurret stepperTurret = new StepperTurret("../PeripherieAnsteuerung/Ready for Pi/Stepper_Drehturm_PI_FINAL.py", argsP);
-        System.out.println("start turmdreheung");
         stepperTurret.runPythonScript();
         stepperTurret.stopPythonProcess();
-        System.out.println("stop turmdreheung");
     }
 
     /**
@@ -227,7 +220,7 @@ public class Logic {
 
         //Wie schnell muss der DC drehen?!?!?!?!?!?
         argsP.add(getDcSPEED()); // max 199
-        System.out.println("getDCSPeed liefert: " + getDcSPEED());
+        logger.log(PrenLogger.LogLevel.DEBUG, "getDCSPeed liefert: " + getDcSPEED());
         DCEngineHandler dcEngineHandler = new DCEngineHandler("../PeripherieAnsteuerung/Ready for Pi/UART_PI_FINAL.py", argsP);
         dcEngineHandler.runPythonScript();
         dcEngineHandler.stopPythonProcess();

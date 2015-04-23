@@ -3,6 +3,7 @@ package ch.hslu.pren.t37.logic;
 import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
 import java.io.IOException;
 import java.util.List;
+import ch.hslu.pren.t37.Logger.PrenLogger;
 
 /**
  * Ultrasonic Signal Handler.
@@ -11,6 +12,8 @@ import java.util.List;
  */
 public class UltrasonicHandler extends ASignalHandler {
 
+    private PrenLogger logger;
+    
     /**
      * Overloaded Constructor.
      * @param scriptPath
@@ -32,7 +35,7 @@ public class UltrasonicHandler extends ASignalHandler {
         String output = "";
             final String pythonOutput = getPythonHandler().getPythonOutput();
             final String[] splittedOutput = pythonOutput.split(";");
-            System.out.println("Links: " + splittedOutput[0] + " Rechts: " + splittedOutput[1] + " Differenz: " + splittedOutput[2]);
+            logger.log(PrenLogger.LogLevel.DEBUG, "Links: " + splittedOutput[0] + " Rechts: " + splittedOutput[1] + " Differenz: " + splittedOutput[2]);
             output = splittedOutput[2];
         return output;
     }

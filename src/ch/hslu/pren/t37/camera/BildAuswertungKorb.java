@@ -11,12 +11,15 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
+import ch.hslu.pren.t37.Logger.PrenLogger;
 
 /**
  *
  * @author Severin
  */
 public class BildAuswertungKorb {
+    
+    private PrenLogger logger;
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -62,19 +65,11 @@ public class BildAuswertungKorb {
 
         // Alle 4 Eckpunkte speichern
         Point topLeft = new Point(matchLoc.x, matchLoc.y);
-        System.out.println("Punkt oben Links:(X,Y) " + topLeft);
-        
         Point topRight = new Point(matchLoc.x+templ.cols(), matchLoc.y);
-        System.out.println("Punkt oben Rechts:(X,Y) " + topRight);
-        
         Point downLeft = new Point(matchLoc.x, matchLoc.y+templ.rows());
-        System.out.println("Punkt unten Links:(X,Y) " + downLeft); 
-        
         Point downRight = new Point(matchLoc.x+templ.cols(), matchLoc.y+templ.rows());
-        System.out.println("Punkt unten Rechts:(X,Y) " + downRight);
 
         // Lösungsbild speichern
-        System.out.println("Writing " + outFile);
         Highgui.imwrite(outFile, img);
 
         //Mittelpunkt berechnen
@@ -89,9 +84,9 @@ public class BildAuswertungKorb {
         mitteKorb = topLeft.x + mitteKorb;
         differnez = mitteKorb - mittePicture;
         
-        System.out.println("Mitte Korb: " + mitteKorb);
-        System.out.println("Mitte Bild: " + mittePicture);
-        System.out.println("Differenz: " + differnez + "\nWenn Differnez negativ, nach rechts drehen");
+        logger.log(PrenLogger.LogLevel.DEBUG, "Mitte Korb: " + mitteKorb);
+        logger.log(PrenLogger.LogLevel.DEBUG, "Mitte Bild: " + mittePicture);
+        logger.log(PrenLogger.LogLevel.DEBUG, "Differenz: " + differnez + "\nWenn Differnez negativ, nach rechts drehen");
         
         return (int)differnez;
     }    
