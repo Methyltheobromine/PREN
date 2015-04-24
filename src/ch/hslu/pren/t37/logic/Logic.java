@@ -74,7 +74,8 @@ public class Logic {
                 + "PIXEL_TO_STEP_CONVERSION : " + PIXEL_TO_STEP_CONVERSION + "\n"
                 + "DC_STOP_SIGNAL : " + DC_STOP_SIGNAL + "\n"
                 + "BALL_COUNTER : " + BALL_COUNTER + "\n"
-                + "dcSPEED : " + dcSPEED);
+                + "dcSPEED : " + dcSPEED + "\n"
+                + "LogLevel : " + LOGLEVEL);
     }
 
     /**
@@ -93,9 +94,10 @@ public class Logic {
             throw new IOException("Initilization failed");
         }
         turretPositionInitialization.stopPythonProcess();
-        Thread.sleep(250);
+        Thread.sleep(100);
         // move to middle
         positionTurret(TURRET_DIST_MIDDLE, "1");
+        logger.log(PrenLogger.LogLevel.DEBUG, "Initialisierung fertig gestellt");
     }
 
     /**
@@ -114,8 +116,6 @@ public class Logic {
             logger.log(PrenLogger.LogLevel.DEBUG, "Richtung: " + direction);
             positionTurret(abs(camSteps), direction);
             //turnByUltrasonicInformation();
-        } else {
-            //turnByUltrasonicInformation();
         }
         logger.log(PrenLogger.LogLevel.DEBUG, "Start DC Engine");
         startDCEngine();
@@ -126,24 +126,22 @@ public class Logic {
         dcEngineStop();
     }
 
-    /**
-     * Turns the Turret on the Information getting by the Ultrasonic Sensors
-     *
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    private void turnByUltrasonicInformation() throws IOException, InterruptedException {
-        String direction;
-        int ultrasonicStep = getUltrasonicSteps();
-        //while(ultrasonicStep!=0){
-        if (ultrasonicStep != 0) {
-            direction = ultrasonicStep < 0 ? "0" : "1";
-            do {
-                positionTurret(ultrasonicStep, direction);
-                ultrasonicStep = getUltrasonicSteps();
-            } while (ultrasonicStep != 0);
-        }
-    }
+//    /**
+//     * Turns the Turret on the Information getting by the Ultrasonic Sensors
+//     *
+//     * @throws IOException
+//     * @throws InterruptedException
+//     */
+//    private void turnByUltrasonicInformation() throws IOException, InterruptedException {
+//        logger.log(PrenLogger.LogLevel.DEBUG, "Start Ultraschallsensoren");
+//        String direction;
+//        int ultrasonicStep = getUltrasonicSteps();
+//        //while(ultrasonicStep!=0){
+//        if (ultrasonicStep != 0) {
+//            direction = ultrasonicStep < 0 ? "0" : "1";
+//            positionTurret(abs(ultrasonicStep), direction);
+//        }
+//    }
 
     /**
      * Gets the steps from the picture evaluation.
@@ -188,26 +186,32 @@ public class Logic {
         stepperTurret.stopPythonProcess();
     }
 
-    /**
-     * Checks the Ultrasonic output and converts the difference to steps
-     *
-     * @return steps
-     */
-    private int getUltrasonicSteps() throws IOException, InterruptedException {
-        int steps = 0;
-        double ultrasonicDiff = 0;
-
-        UltrasonicHandler ultrasonicHandler = new UltrasonicHandler("../PeripherieAnsteuerung/Ready for Pi/ultrasonic_PI_FINAL.py", new ArrayList<String>());
-        ultrasonicHandler.runPythonScript();
-        String diff = ultrasonicHandler.evaluateScriptOutput();
-        ultrasonicHandler.stopPythonProcess();
-
-        ultrasonicDiff = Double.parseDouble(diff);
-        if ((abs(ultrasonicDiff)) > 1) {
-            steps = (int) (ultrasonicDiff / MM_TO_STEP_CONVERSION);
-        }
-        return steps;
-    }
+//    /**
+//     * Checks the Ultrasonic output and converts the difference to steps
+//     *
+//     * @return steps
+//     */
+//    private int getUltrasonicSteps() throws IOException, InterruptedException {
+//        int steps = 0;
+//        double ultrasonicDiff = 0;
+//        logger.log(PrenLogger.LogLevel.DEBUG, "start auswertung");
+//        UltrasonicHandler ultrasonicHandler = new UltrasonicHandler("../PeripherieAnsteuerung/Ready for Pi/ultrasonic_PI_FINAL.py", new ArrayList<String>());
+//        ultrasonicHandler.runPythonScript();
+//        logger.log(PrenLogger.LogLevel.DEBUG, "läuft");
+//        String diff = ultrasonicHandler.evaluateScriptOutput();
+//        logger.log(PrenLogger.LogLevel.DEBUG, "auswertung :" + diff);
+//        ultrasonicHandler.stopPythonProcess();
+//        
+//        
+//        ultrasonicDiff = Double.parseDouble(diff);
+//        
+//        logger.log(PrenLogger.LogLevel.DEBUG, "auswertung ergab :" + ultrasonicDiff );
+//        if ((abs(ultrasonicDiff)) > 1) {
+//            steps = (int) (ultrasonicDiff / MM_TO_STEP_CONVERSION);
+//        }
+//        logger.log(PrenLogger.LogLevel.DEBUG, ""+steps);
+//        return steps;
+//    }
 
     /**
      * Starts the DC Engine.
@@ -219,7 +223,7 @@ public class Logic {
         ArrayList<String> argsP = new ArrayList<>();
 
         //Wie schnell muss der DC drehen?!?!?!?!?!?
-        argsP.add(getDcSPEED()); // max 199
+        argsP.add(getDcSPEED());
         logger.log(PrenLogger.LogLevel.DEBUG, "getDCSPeed liefert: " + getDcSPEED());
         DCEngineHandler dcEngineHandler = new DCEngineHandler("../PeripherieAnsteuerung/Ready for Pi/UART_PI_FINAL.py", argsP);
         dcEngineHandler.runPythonScript();

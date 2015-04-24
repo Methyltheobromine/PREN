@@ -110,8 +110,20 @@ GPIO.output(GPIO_TRIGGER_L, False)
 # the user seeing lots of unnecessary error
 # messages.
 
-distanceR = measure_averageR()
-distanceL = measure_averageL()
-s = str(distanceL) + ';' + str(distanceR) + ';' + str(distanceL - distanceR)
-print s
+i = 0
+n = 10
+averageOverTenTimes = 0
+
+while i < n:
+	distanceR = measure_averageR()
+	distanceL = measure_averageL()
+	#s = str(distanceL) + ';' + str(distanceR) + ';' + str(distanceL - distanceR)
+	#print s
+	averageOverTenTimes = averageOverTenTimes + (distanceL - distanceR)
+	#print averageOverTenTimes
+	i = i + 1
+	time.sleep(0.05)
+
+averageOverTenTimes = averageOverTenTimes / 10
+print "1;1;" + str(averageOverTenTimes)
 GPIO.cleanup()
