@@ -76,7 +76,8 @@
         <mkdir dir="Jar" />
         <copy todir="Jar">
             <fileset dir="dist"/>
-        </copy> 
+        </copy>
+        <copy file="config.properties" todir="Jar"/> 
     </target>
 	
 </project>
