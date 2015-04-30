@@ -67,7 +67,7 @@ public class Logic {
         LOGLEVEL = ReadPropertyFile.getProperties().getProperty("LogLevel");
         System.out.println(LOGLEVEL);
         PrenLogger.setCurrentLoglevel(PrenLogger.LogLevel.valueOf(LOGLEVEL));
-                
+
         logger.log(PrenLogger.LogLevel.DEBUG, "Folgende Werte wurden aus dem config.properties geladen: \n"
                 + "TURRET_DIST_MIDDLE : " + TURRET_DIST_MIDDLE + "\n"
                 + "MM_TO_STEP_CONVERSION : " + MM_TO_STEP_CONVERSION + "\n"
@@ -115,7 +115,6 @@ public class Logic {
             String direction = camSteps < 0 ? "0" : "1";
             logger.log(PrenLogger.LogLevel.DEBUG, "Richtung: " + direction);
             positionTurret(abs(camSteps), direction);
-            //turnByUltrasonicInformation();
         }
         logger.log(PrenLogger.LogLevel.DEBUG, "Start DC Engine");
         startDCEngine();
@@ -126,27 +125,10 @@ public class Logic {
         dcEngineStop();
     }
 
-//    /**
-//     * Turns the Turret on the Information getting by the Ultrasonic Sensors
-//     *
-//     * @throws IOException
-//     * @throws InterruptedException
-//     */
-//    private void turnByUltrasonicInformation() throws IOException, InterruptedException {
-//        logger.log(PrenLogger.LogLevel.DEBUG, "Start Ultraschallsensoren");
-//        String direction;
-//        int ultrasonicStep = getUltrasonicSteps();
-//        //while(ultrasonicStep!=0){
-//        if (ultrasonicStep != 0) {
-//            direction = ultrasonicStep < 0 ? "0" : "1";
-//            positionTurret(abs(ultrasonicStep), direction);
-//        }
-//    }
-
     /**
      * Gets the steps from the picture evaluation.
      *
-     * @return steps   
+     * @return steps
      */
     private int getCalculatedStepsFromCamera() throws IOException, InterruptedException {
         double steps = 0;
@@ -186,33 +168,6 @@ public class Logic {
         stepperTurret.stopPythonProcess();
     }
 
-//    /**
-//     * Checks the Ultrasonic output and converts the difference to steps
-//     *
-//     * @return steps
-//     */
-//    private int getUltrasonicSteps() throws IOException, InterruptedException {
-//        int steps = 0;
-//        double ultrasonicDiff = 0;
-//        logger.log(PrenLogger.LogLevel.DEBUG, "start auswertung");
-//        UltrasonicHandler ultrasonicHandler = new UltrasonicHandler("../PeripherieAnsteuerung/Ready for Pi/ultrasonic_PI_FINAL.py", new ArrayList<String>());
-//        ultrasonicHandler.runPythonScript();
-//        logger.log(PrenLogger.LogLevel.DEBUG, "läuft");
-//        String diff = ultrasonicHandler.evaluateScriptOutput();
-//        logger.log(PrenLogger.LogLevel.DEBUG, "auswertung :" + diff);
-//        ultrasonicHandler.stopPythonProcess();
-//        
-//        
-//        ultrasonicDiff = Double.parseDouble(diff);
-//        
-//        logger.log(PrenLogger.LogLevel.DEBUG, "auswertung ergab :" + ultrasonicDiff );
-//        if ((abs(ultrasonicDiff)) > 1) {
-//            steps = (int) (ultrasonicDiff / MM_TO_STEP_CONVERSION);
-//        }
-//        logger.log(PrenLogger.LogLevel.DEBUG, ""+steps);
-//        return steps;
-//    }
-
     /**
      * Starts the DC Engine.
      *
@@ -244,19 +199,33 @@ public class Logic {
         dcEngineHandler.stopPythonProcess();
     }
 
-    /**
-     * Releases the Magazine.
-     *
-     * @throws IOException
-     * @throws InterruptedException
-     */
+//    /**
+//     * Releases the Magazine.
+//     *
+//     * @throws IOException
+//     * @throws InterruptedException
+//     */
+//    private void releaseBalls() throws IOException, InterruptedException {
+//        ArrayList<String> argsP = new ArrayList<>();
+//        argsP.add("48"); // Eine halbe Umdrehung
+//        argsP.add("1");  // Vorwärts drehen
+//        StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Light_Barrier_PI_FINAL.py", argsP);
+//        stepperFeedingBalls.runPythonScript();
+//        stepperFeedingBalls.stopPythonProcess();
+//        Thread.sleep(500);
+//    }
     private void releaseBalls() throws IOException, InterruptedException {
-        ArrayList<String> argsP = new ArrayList<>();
-        argsP.add("48"); // Eine halbe Umdrehung
-        argsP.add("1");  // Vorwärts drehen
-        StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Stepper_Zufuerung_PI_FINAL.py", argsP);
+        StepperMagazine stepperFeedingBalls = new StepperMagazine("../PeripherieAnsteuerung/Ready for Pi/Light_Barrier_PI_FINAL.py", new ArrayList<String>());
         stepperFeedingBalls.runPythonScript();
+
+        String signal = stepperFeedingBalls.evaluateScriptOutput();
+        if (!signal.equals("Ready")) {
+            logger.log(PrenLogger.LogLevel.ERROR, "Initialisieren fehlgeschlagen");
+            throw new IOException("Initilization failed");
+        }
+            
         stepperFeedingBalls.stopPythonProcess();
         Thread.sleep(500);
     }
 }
+

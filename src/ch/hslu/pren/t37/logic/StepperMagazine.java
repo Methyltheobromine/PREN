@@ -1,6 +1,7 @@
 package ch.hslu.pren.t37.logic;
 
 import ch.hslu.pren.t37.pythoninterop.ASignalHandler;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -21,8 +22,8 @@ public class StepperMagazine extends ASignalHandler {
     }
 
     @Override
-    public String evaluateScriptOutput() {
-        return "";
+    public String evaluateScriptOutput() throws IOException {
+        return getPythonHandler().getPythonOutput();
     }
 
 }
