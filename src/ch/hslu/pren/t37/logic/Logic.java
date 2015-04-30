@@ -118,7 +118,7 @@ public class Logic {
         }
         logger.log(PrenLogger.LogLevel.DEBUG, "Start DC Engine");
         startDCEngine();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         for (int i = 1; i <= BALL_COUNTER; i++) {
             releaseBalls();
             logger.log(PrenLogger.LogLevel.DEBUG, "Ball " + i + " geschossen");
